@@ -72,3 +72,80 @@ int isIdentifier(char *lexeme, char ch, int *type, FILE *file) {
         }
     }
 }
+
+
+//new codes
+int isIdentifier(char *lexeme, char ch, int *type, FILE *file) {
+    int state = 0;
+    int lexeme_index = 0;
+
+    while (1) {
+        switch (state) {
+            case 0: // Start state
+                if (ch == '#' || ch == '~') {
+                    state = (ch == '#') ? 3 : 1; // Transition based on identifier type
+                    lexeme[lexeme_index++] = ch; // Store the first character
+                    ch = getNextChar(file);
+                } else {
+                    return 0; // Not an identifier
+                }
+                break;
+
+            case 1: // Function identifier (~) expecting lowercase letter
+                if (islower(ch)) {
+                    state = 2; // Transition to accepting state
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else {
+                    while (!(isspace(ch) || ch == '\n' || ch == '\t')) { // Capture invalid string
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                    }
+                    ungetc(ch, file);
+                    *type = INVALID;
+                    return 0; // Invalid identifier
+                }
+                break;
+
+            case 2: // Function identifier accepting state with self-loop for alphanumerics
+                while (isalpha(ch) || isdigit(ch)) {
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                }
+                ungetc(ch, file);
+                *type = FUNC_IDENT;
+                lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
+                return 1; // Valid function identifier
+
+            case 3: // Variable identifier (#) expecting lowercase letter
+                if (islower(ch)) {
+                    state = 4; // Transition to accepting state
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else {
+                    while (!(isspace(ch) || ch == '\n' || ch == '\t')) { // Capture invalid string
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                    }
+                    ungetc(ch, file);
+                    *type = INVALID;
+                    return 0; // Invalid identifier
+                }
+                break;
+
+            case 4: // Variable identifier accepting state with self-loop for alphanumerics
+                while (isalpha(ch) || isdigit(ch)) {
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                }
+                ungetc(ch, file);
+                *type = VAR_IDENT;
+                lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
+                return 1; // Valid variable identifier
+
+            default:
+                *type = INVALID;
+                return 0; // Should never reach here
+        }
+    }
+}
