@@ -1,0 +1,373 @@
+typedef enum {
+    INITIAL_STATE = 0,
+    // States for keywords starting with 'b'
+    Q1 = 1, Q2, Q3, Q4, Q5, Q6,  // beegin
+    Q7, Q8, Q9,                   // beegone
+    Q10, Q11, Q12,                // buzz
+    Q13, Q14, Q15,                // buzzout
+    // States for 'case'
+    Q16, Q17, Q18, Q19,
+    // States for 'do' and 'default'
+    Q20, Q21,                     // do
+    Q22, Q23, Q24, Q25, Q26, Q27, // default
+    // States for 'else' and 'elseif'
+    Q28, Q29, Q30, Q31,          // else
+    Q32, Q33,                     // elseif
+    // States for 'for'
+    Q34, Q35, Q36,
+    // States for 'gather'
+    Q37, Q38, Q39, Q40, Q41, Q42,
+    // States for 'hive' and 'hover'
+    Q43, Q44, Q45, Q46,          // hive
+    Q47, Q48, Q49, Q50,          // hover
+    // States for 'if'
+    Q51, Q52,
+    // States for 'queenbee'
+    Q53, Q54, Q55, Q56, Q57, Q58, Q59, Q60,
+    // States for 'return'
+    Q61, Q62, Q63, Q64, Q65, Q66,
+    // States for 'sting' and 'switch'
+    Q67, Q68, Q69, Q70, Q71,     // sting
+    Q72, Q73, Q74, Q75, Q76,     // switch
+    // States for 'while'
+    Q77, Q78, Q79, Q80, Q81
+} State;
+
+int isKeyword(Token *token, Token *tokens, char *lexeme, char ch, int *type) {
+    State current_state = INITIAL_STATE;
+    int i = 0;
+
+    while (lexeme[i] != '\0') {
+        switch (current_state) {
+            case INITIAL_STATE:
+                switch (lexeme[i]) {
+                    case 'b': current_state = Q1; break;
+                    case 'c': current_state = Q16; break;
+                    case 'd': current_state = Q20; break;
+                    case 'e': current_state = Q28; break;
+                    case 'f': current_state = Q34; break;
+                    case 'g': current_state = Q37; break;
+                    case 'h': current_state = Q43; break;
+                    case 'i': current_state = Q51; break;
+                    case 'q': current_state = Q53; break;
+                    case 'r': current_state = Q61; break;
+                    case 's': current_state = Q67; break;
+                    case 'w': current_state = Q77; break;
+                    default: return 0;
+                }
+                break;
+
+            // States for 'beegin', 'beegone', 'buzz', 'buzzout'
+            case Q1:
+                if (lexeme[i] == 'e') current_state = Q2;
+                else if (lexeme[i] == 'u') current_state = Q10;
+                else return 0;
+                break;
+            case Q2:
+                if (lexeme[i] == 'e') current_state = Q3;
+                else return 0;
+                break;
+            case Q3:
+                if (lexeme[i] == 'g') current_state = Q4;
+                else return 0;
+                break;
+            case Q4:
+                if (lexeme[i] == 'i') current_state = Q5;
+                else if (lexeme[i] == 'o') current_state = Q7;
+                else return 0;
+                break;
+            case Q5:
+                if (lexeme[i] == 'n') current_state = Q6;
+                else return 0;
+                break;
+            case Q7:
+                if (lexeme[i] == 'n') current_state = Q8;
+                else return 0;
+                break;
+            case Q8:
+                if (lexeme[i] == 'e') current_state = Q9;
+                else return 0;
+                break;
+            case Q10:
+                if (lexeme[i] == 'z') current_state = Q11;
+                else return 0;
+                break;
+            case Q11:
+                if (lexeme[i] == 'z') current_state = Q12;
+                else return 0;
+                break;
+            case Q12:
+                if (lexeme[i] == 'o') current_state = Q13;
+                else if (lexeme[i] == '\0') return 1;
+                else return 0;
+                break;
+            case Q13:
+                if (lexeme[i] == 'u') current_state = Q14;
+                else return 0;
+                break;
+            case Q14:
+                if (lexeme[i] == 't') current_state = Q15;
+                else return 0;
+                break;
+
+            // States for 'case'
+            case Q16:
+                if (lexeme[i] == 'a') current_state = Q17;
+                else return 0;
+                break;
+            case Q17:
+                if (lexeme[i] == 's') current_state = Q18;
+                else return 0;
+                break;
+            case Q18:
+                if (lexeme[i] == 'e') current_state = Q19;
+                else return 0;
+                break;
+
+            // States for 'do' and 'default'
+            case Q20:
+                if (lexeme[i] == 'o') current_state = Q21;
+                else if (lexeme[i] == 'e') current_state = Q22;
+                else return 0;
+                break;
+            case Q22:
+                if (lexeme[i] == 'f') current_state = Q23;
+                else return 0;
+                break;
+            case Q23:
+                if (lexeme[i] == 'a') current_state = Q24;
+                else return 0;
+                break;
+            case Q24:
+                if (lexeme[i] == 'u') current_state = Q25;
+                else return 0;
+                break;
+            case Q25:
+                if (lexeme[i] == 'l') current_state = Q26;
+                else return 0;
+                break;
+            case Q26:
+                if (lexeme[i] == 't') current_state = Q27;
+                else return 0;
+                break;
+
+            // States for 'else' and 'elseif'
+            case Q28:
+                if (lexeme[i] == 'l') current_state = Q29;
+                else return 0;
+                break;
+            case Q29:
+                if (lexeme[i] == 's') current_state = Q30;
+                else return 0;
+                break;
+            case Q30:
+                if (lexeme[i] == 'e') current_state = Q31;
+                else return 0;
+                break;
+            case Q31:
+                if (lexeme[i] == 'i') current_state = Q32;
+                else if (lexeme[i] == '\0') return 1;
+                else return 0;
+                break;
+            case Q32:
+                if (lexeme[i] == 'f') current_state = Q33;
+                else return 0;
+                break;
+
+            // States for 'for'
+            case Q34:
+                if (lexeme[i] == 'o') current_state = Q35;
+                else return 0;
+                break;
+            case Q35:
+                if (lexeme[i] == 'r') current_state = Q36;
+                else return 0;
+                break;
+
+            // States for 'gather'
+            case Q37:
+                if (lexeme[i] == 'a') current_state = Q38;
+                else return 0;
+                break;
+            case Q38:
+                if (lexeme[i] == 't') current_state = Q39;
+                else return 0;
+                break;
+            case Q39:
+                if (lexeme[i] == 'h') current_state = Q40;
+                else return 0;
+                break;
+            case Q40:
+                if (lexeme[i] == 'e') current_state = Q41;
+                else return 0;
+                break;
+            case Q41:
+                if (lexeme[i] == 'r') current_state = Q42;
+                else return 0;
+                break;
+
+            // States for 'hive' and 'hover'
+            case Q43:
+                if (lexeme[i] == 'i') current_state = Q44;
+                else if (lexeme[i] == 'o') current_state = Q47;
+                else return 0;
+                break;
+            case Q44:
+                if (lexeme[i] == 'v') current_state = Q45;
+                else return 0;
+                break;
+            case Q45:
+                if (lexeme[i] == 'e') current_state = Q46;
+                else return 0;
+                break;
+            case Q47:
+                if (lexeme[i] == 'v') current_state = Q48;
+                else return 0;
+                break;
+            case Q48:
+                if (lexeme[i] == 'e') current_state = Q49;
+                else return 0;
+                break;
+            case Q49:
+                if (lexeme[i] == 'r') current_state = Q50;
+                else return 0;
+                break;
+
+            // States for 'if'
+            case Q51:
+                if (lexeme[i] == 'f') current_state = Q52;
+                else return 0;
+                break;
+
+            // States for 'queenbee'
+            case Q53:
+                if (lexeme[i] == 'u') current_state = Q54;
+                else return 0;
+                break;
+            case Q54:
+                if (lexeme[i] == 'e') current_state = Q55;
+                else return 0;
+                break;
+            case Q55:
+                if (lexeme[i] == 'e') current_state = Q56;
+                else return 0;
+                break;
+            case Q56:
+                if (lexeme[i] == 'n') current_state = Q57;
+                else return 0;
+                break;
+            case Q57:
+                if (lexeme[i] == 'b') current_state = Q58;
+                else return 0;
+                break;
+            case Q58:
+                if (lexeme[i] == 'e') current_state = Q59;
+                else return 0;
+                break;
+            case Q59:
+                if (lexeme[i] == 'e') current_state = Q60;
+                else return 0;
+                break;
+
+            // States for 'return'
+            case Q61:
+                if (lexeme[i] == 'e') current_state = Q62;
+                else return 0;
+                break;
+            case Q62:
+                if (lexeme[i] == 't') current_state = Q63;
+                else return 0;
+                break;
+            case Q63:
+                if (lexeme[i] == 'u') current_state = Q64;
+                else return 0;
+                break;
+            case Q64:
+                if (lexeme[i] == 'r') current_state = Q65;
+                else return 0;
+                break;
+            case Q65:
+                if (lexeme[i] == 'n') current_state = Q66;
+                else return 0;
+                break;
+
+            // States for 'sting' and 'switch'
+            case Q67:
+                if (lexeme[i] == 't') current_state = Q68;
+                else if (lexeme[i] == 'w') current_state = Q72;
+                else return 0;
+                break;
+            case Q68:
+                if (lexeme[i] == 'i') current_state = Q69;
+                else return 0;
+                break;
+            case Q69:
+                if (lexeme[i] == 'n') current_state = Q70;
+                else return 0;
+                break;
+            case Q70:
+                if (lexeme[i] == 'g') current_state = Q71;
+                else return 0;
+                break;
+            case Q72:
+                if (lexeme[i] == 'i') current_state = Q73;
+                else return 0;
+                break;
+            case Q73:
+                if (lexeme[i] == 't') current_state = Q74;
+                else return 0;
+                break;
+            case Q74:
+                if (lexeme[i] == 'c') current_state = Q75;
+                else return 0;
+                break;
+            case Q75:
+                if (lexeme[i] == 'h') current_state = Q76;
+                else return 0;
+                break;
+
+            // States for 'while'
+            case Q77:
+                if (lexeme[i] == 'h') current_state = Q78;
+                else return 0;
+                break;
+            case Q78:
+                if (lexeme[i] == 'i') current_state = Q79;
+                else return 0;
+                break;
+            case Q79:
+                if (lexeme[i] == 'l') current_state = Q80;
+                else return 0;
+                break;
+            case Q80:
+                if (lexeme[i] == 'e') current_state = Q81;
+                else return 0;
+                break;
+        }
+        i++;
+    }
+
+    // Check final state and assign token type
+    switch (current_state) {
+        case Q6:  *type = BEEGIN_TOKEN; return 1;
+        case Q9:  *type = BEEGONE_TOKEN; return 1;
+        case Q12: *type = BUZZ_TOKEN; return 1;
+        case Q15: *type = BUZZOUT_TOKEN; return 1;
+        case Q19: *type = CASE_TOKEN; return 1;
+        case Q21: *type = DO_TOKEN; return 1;
+        case Q27: *type = DEFAULT_TOKEN; return 1;
+        case Q31: *type = ELSE_TOKEN; return 1;
+        case Q33: *type = ELSEIF_TOKEN; return 1;
+        case Q36: *type = FOR_TOKEN; return 1;
+        case Q42: *type = GATHER_TOKEN; return 1;
+        case Q46: *type = HIVE_TOKEN; return 1;
+        case Q50: *type = HOVER_TOKEN; return 1;
+        case Q52: *type = IF_TOKEN; return 1;
+        case Q60: *type = QUEENBEE_TOKEN; return 1;
+        case Q66: *type = RETURN_TOKEN; return 1;
+        case Q71: *type = STING_TOKEN; return 1;
+        case Q76: *type = SWITCH_TOKEN; return 1;
+        case Q81: *type = WHILE_TOKEN; return 1;
+        default:  return 0;
+    }
+}
