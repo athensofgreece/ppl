@@ -1,0 +1,156 @@
+int isNoiseWord(char *lexeme, char ch, int *type, FILE *file) {
+    int state = 0;
+    int lexeme_index = 0;
+
+    while (1) {
+        switch (state) {
+            case 0: // Start state
+                switch (ch) {
+                    case 'r':
+                        state = 1; // Transition to "return" sequence
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 1: // State q1 ("r")
+                switch (ch) {
+                    case 'e':
+                        state = 2;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 2: // State q2 ("re")
+                switch (ch) {
+                    case 't':
+                        state = 3;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 3: // State q3 ("ret")
+                switch (ch) {
+                    case 'u':
+                        state = 4;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 4: // State q4 ("retu")
+                switch (ch) {
+                    case 'r':
+                        state = 5;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 5: // State q5 ("return")
+                switch (ch) {
+                    case 'n':
+                        state = 6;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 6: // Space after "return"
+                switch (ch) {
+                    case ' ':
+                        state = 7;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 7: // State q7 (space after "return")
+                switch (ch) {
+                    case 'v':
+                        state = 8; // Transition to "value"
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 8: // State q8 ("v")
+                switch (ch) {
+                    case 'a':
+                        state = 9;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 9: // State q9 ("va")
+                switch (ch) {
+                    case 'l':
+                        state = 10;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 10: // State q10 ("val")
+                switch (ch) {
+                    case 'u':
+                        state = 11;
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not a noise word
+                }
+                break;
+
+            case 11: // State q11 ("valu")
+                switch (ch) {
+                    case 'e':
+                        state = 12; // Accepting state
+                        lexeme[lexeme_index++] = ch;
+                        lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
+                        *type = RETURN_VALUE_TOKEN;
+                        return 1; // Valid noise word "return value"
+                    default:
+                        return 0; // Not a noise word
+                }
+
+            default:
+                *type = INVALID;
+                return 0; // Should never reach here
+        }
+    }
+}
