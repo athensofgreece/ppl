@@ -1,0 +1,50 @@
+int isStringLiteral(char *lexeme, char ch, int *type, FILE *file) {
+    int state = 0;
+    int lexeme_index = 0;
+
+    while (1) {
+        switch (state) {
+            case 0: // Start state
+                if (ch == '"') {
+                    state = 1; // Transition to inside string state
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else {
+                    return 0; // Not a string literal
+                }
+                break;
+
+            case 1: // Inside string
+                if (ch == '"') {
+                    state = 2; // Transition to accepting state
+                    lexeme[lexeme_index++] = ch;
+                } else if (ch == '\\') {
+                    state = 3; // Handle escape sequence
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else if (ch == EOF || ch == '\n') {
+                    *type = INVALID;
+                    return 0; // Unterminated string literal
+                } else {
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                }
+                break;
+
+            case 3: // Escape sequence
+                lexeme[lexeme_index++] = ch; // Add escaped character
+                state = 1; // Return to inside string state
+                ch = getNextChar(file);
+                break;
+
+            case 2: // Accepting state
+                lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
+                *type = STRING_LITERAL;
+                return 1; // Valid string literal
+
+            default:
+                *type = INVALID;
+                return 0; // Should never reach here
+        }
+    }
+}
