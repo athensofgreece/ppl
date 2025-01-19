@@ -1,0 +1,68 @@
+int isNumLiteral(char *lexeme, char ch, int *type, FILE *file) {
+    int lexeme_index = 0;
+    int state = 0; // Start state
+
+    // Store the first character
+    lexeme[lexeme_index++] = ch;
+
+    while (1) {
+        switch (state) {
+            case 0: // Initial state
+                if (isdigit(ch)) {
+                    state = 1; // Transition to integer state
+                } else if (ch == '.') {
+                    state = 2; // Transition to start of float state
+                } else {
+                    lexeme[lexeme_index] = '\0';
+                    return INVALID_TOKEN; // Invalid starting character
+                }
+                break;
+
+            case 1: // Integer state
+                ch = getNextChar(file);
+                if (isdigit(ch)) {
+                    // Stay in integer state
+                    lexeme[lexeme_index++] = ch;
+                } else if (ch == '.') {
+                    state = 3; // Transition to fractional part state
+                    lexeme[lexeme_index++] = ch;
+                } else {
+                    // End of number
+                    ungetc(ch, file);
+                    lexeme[lexeme_index] = '\0';
+                    *type = INTEGER;
+                    return 1; // Valid integer
+                }
+                break;
+
+            case 2: // Start of float (".")
+                ch = getNextChar(file);
+                if (isdigit(ch)) {
+                    state = 3; // Transition to fractional part state
+                    lexeme[lexeme_index++] = ch;
+                } else {
+                    lexeme[lexeme_index] = '\0';
+                    return INVALID_TOKEN; // Invalid float starting with "."
+                }
+                break;
+
+            case 3: // Fractional part of float
+                ch = getNextChar(file);
+                if (isdigit(ch)) {
+                    // Stay in fractional part state
+                    lexeme[lexeme_index++] = ch;
+                } else {
+                    // End of float
+                    ungetc(ch, file);
+                    lexeme[lexeme_index] = '\0';
+                    *type = FLOAT;
+                    return 1; // Valid float
+                }
+                break;
+
+            default:
+                lexeme[lexeme_index] = '\0';
+                return INVALID_TOKEN; // Catch-all for unexpected states
+        }
+    }
+}
