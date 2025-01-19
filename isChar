@@ -17,12 +17,12 @@ int isChar(char *lexeme, char ch, int *type, FILE *file) {
                 break;
 
             case 1: // State after opening quote
-                if (isprint(ch) && ch != '\'') {
+                if (isalnum(ch)) { // Accept only alphanumeric characters
                     state = 2; // Transition to valid character
                     lexeme[lexeme_index++] = ch;
                     ch = getNextChar(file);
                 } else {
-                    return 0; // Invalid char literal (empty or invalid char)
+                    return 0; // Invalid char literal (not alphanumeric)
                 }
                 break;
 
