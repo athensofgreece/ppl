@@ -1,0 +1,60 @@
+int isComment(char *lexeme, char ch, int *type, FILE *file) {
+    int state = 0;
+    int lexeme_index = 0;
+
+    while (1) {
+        switch (state) {
+            case 0: // Start state
+                if (ch == '<') {
+                    state = 1; // Transition to potential comment state
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else {
+                    return 0; // Not a comment
+                }
+                break;
+
+            case 1: // Expecting '|'
+                if (ch == '|') {
+                    state = 2; // Transition to inside comment state
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else {
+                    ungetc(ch, file);
+                    return 0; // Not a valid comment
+                }
+                break;
+
+            case 2: // Inside comment
+                while (ch != ':' && ch != EOF) {
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                }
+                if (ch == ':') {
+                    state = 3; // Transition to potential end of comment
+                    lexeme[lexeme_index++] = ch;
+                    ch = getNextChar(file);
+                } else {
+                    *type = INVALID;
+                    return 0; // Unterminated comment
+                }
+                break;
+
+            case 3: // Expecting '>' to close comment
+                if (ch == '>') {
+                    state = 4; // Accepting state
+                    lexeme[lexeme_index++] = ch;
+                    lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
+                    *type = COMMENT_CLASS;
+                    return 1; // Valid comment
+                } else {
+                    *type = INVALID;
+                    return 0; // Invalid comment termination
+                }
+
+            default:
+                *type = INVALID;
+                return 0; // Should never reach here
+        }
+    }
+}
