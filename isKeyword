@@ -289,7 +289,7 @@ int isKeyword(char *lexeme) {
                 break;
             case 80:
                 current_state = (lexeme [i]) == 'e') ? 81 : 0;
-            case 81:
+            case 81: //final state for while
                 return (lexeme [i] == '\0') ? 1 : 0;
 
             default:
