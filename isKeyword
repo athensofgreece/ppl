@@ -223,7 +223,7 @@ int isKeyword(char *lexeme) {
             case 59:
                 current_state = (lexeme [i] == 'e') ? 60 : 0;
                 break;
-            case 60:
+            case 60: //finak state for queenbee
                 return (lexeme[i] == '\0') ? 1 : 0;
 
             case 61: //starting state for 'return'
@@ -241,7 +241,7 @@ int isKeyword(char *lexeme) {
             case 65:
                 current_state = (lexeme [i] == 'n') ? 66 : 0;
                 break;
-            case 66:
+            case 66: // final state for return
                 return (lexeme[i] == '\0') ? 1 : 0;
             
             case 67: // switch and sting
@@ -266,10 +266,31 @@ int isKeyword(char *lexeme) {
                 current_state = (lexeme [i] == 'i') ? 73 : 0;
                 break;
             case 73:
-                current_state = (lexeme [i] == 'f') ? 52 : 0;
+                current_state = (lexeme [i] == 't') ? 74 : 0;
                 break;
-
-// di pa tapoooooooooooooooosssssss
+   
+            case 74: 
+                current_state = (lexeme [i]) == 'c') ? 75 : 0;
+                break;
+            case 75: 
+                current_state = (lexeme [i]) == 'h') ? 76 : 0;
+                break; 
+            case 76: //final state for switch
+                return (lexeme[i] == '\0') ? 1 : 0;
+            
+            case 77: // starting state for while
+                current_state = (lexeme [i]) == 'h') ? 78 : 0;
+                break;
+            case 78:
+                current_state = (lexeme [i]) == 'i') ? 79 : 0;
+                break;
+            case 79:
+                current_state = (lexeme [i]) == 'l') ? 80: 0;
+                break;
+            case 80:
+                current_state = (lexeme [i]) == 'e') ? 81 : 0;
+            case 81:
+                return (lexeme [i] == '\0') ? 1 : 0;
 
             default:
                 return 0; // Not a valid keyword
