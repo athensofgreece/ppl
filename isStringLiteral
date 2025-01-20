@@ -17,24 +17,36 @@ int isStringLiteral(char *lexeme, char ch, int *type, FILE *file) {
                 break;
 
             case 1: // Inside string literal
-                if (isprint(ch) && ch != '\"') { // Accept printable characters except double quote
-                    lexeme[lexeme_index++] = ch;
-                    ch = getNextChar(file);
-                } else if (ch == '\"') {
-                    state = 2; // Transition to closing double quote
-                    lexeme[lexeme_index++] = ch;
-                    lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
-                    *type = STRING_LITERAL_TOKEN;
-                    return 1; // Valid string literal
-                } else {
-                    return 0; // Invalid string literal
+                switch (ch) {
+                    case '\"': // Closing double quote
+                        state = 2;
+                        lexeme[lexeme_index++] = ch;
+                        lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
+                        *type = STRING_LITERAL_TOKEN;
+                        return 1; // Valid string literal
+                    case '\n': // Invalid: newlines are not allowed
+                    case EOF:  // Invalid: premature end of file
+                        *type = INVALID;
+                        return 0; // Invalid string literal
+                    default:
+                        if (isprint(ch)) { // Printable characters except double quote
+                            lexeme[lexeme_index++] = ch;
+                            ch = getNextChar(file);
+                        } else {
+                            *type = INVALID;
+                            return 0; // Invalid string literal
+                        }
+                        break;
                 }
                 break;
+
+            case 2: // Accepting state (Should not be reached)
+                *type = INVALID;
+                return 0;
 
             default:
                 *type = INVALID;
                 return 0; // Should never reach here
         }
-        ch = getNextChar(file);
     }
 }
