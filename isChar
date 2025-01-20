@@ -6,8 +6,8 @@ int isChar(char *lexeme, char ch, int *type, FILE *file) {
         switch (state) {
             case 0: // Start state
                 switch (ch) {
-                    case '\'':
-                        state = 1; // Transition to opening single quote
+                    case '\'': // Opening single quote
+                        state = 1; // Transition to inside char literal
                         lexeme[lexeme_index++] = ch;
                         ch = getNextChar(file);
                         break;
@@ -16,32 +16,43 @@ int isChar(char *lexeme, char ch, int *type, FILE *file) {
                 }
                 break;
 
-            case 1: // State after opening quote
-                if (isalnum(ch)) { // Accept only alphanumeric characters
-                    state = 2; // Transition to valid character
-                    lexeme[lexeme_index++] = ch;
-                    ch = getNextChar(file);
-                } else {
-                    return 0; // Invalid char literal (not alphanumeric)
+            case 1: // Inside char literal (expecting a valid character)
+                switch (ch) {
+                    case '\n': // Invalid: newline inside char literal
+                    case EOF:  // Invalid: premature end of file
+                    case '\'': // Invalid: empty char literal
+                        *type = INVALID;
+                        return 0;
+                    default:
+                        if (isalnum(ch)) { // Accept only alphanumeric characters
+                            state = 2; // Transition to valid character
+                            lexeme[lexeme_index++] = ch;
+                            ch = getNextChar(file);
+                        } else {
+                            *type = INVALID;
+                            return 0; // Invalid character
+                        }
+                        break;
                 }
                 break;
 
-            case 2: // State after valid character
+            case 2: // After valid character (expecting closing single quote)
                 switch (ch) {
-                    case '\'':
-                        state = 3; // Accepting state (closing single quote)
+                    case '\'': // Closing single quote
+                        state = 3; // Accepting state
                         lexeme[lexeme_index++] = ch;
                         lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
                         *type = CHAR_LITERAL_TOKEN;
                         return 1; // Valid char literal
                     default:
+                        *type = INVALID;
                         return 0; // Invalid char literal (missing closing quote)
                 }
+                break;
 
             default:
                 *type = INVALID;
                 return 0; // Should never reach here
         }
-        ch = getNextChar(file);
     }
 }
