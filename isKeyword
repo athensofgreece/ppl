@@ -319,7 +319,7 @@ int isKeyword(char *lexeme, int *type) {
         case 31: *type = ELSE_TOKEN; return 1;      // else
         case 33: *type = ELSEIF_TOKEN; return 1;    // elseif
         case 36: *type = FOR_TOKEN; return 1;       // for
-        case 42:  *type = GATHER_TOKEN; return 1;   // gather
+        case 42: *type = GATHER_TOKEN; return 1;    // gather
         case 46: *type = HIVE_TOKEN; return 1;      // hive
         case 50: *type = HOVER_TOKEN; return 1;     // hover
         case 52: *type = IF_TOKEN; return 1;        // if
