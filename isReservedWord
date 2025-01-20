@@ -1,138 +1,114 @@
-typedef enum {
-    INITIAL_STATE = 0,
-    // States for 'bool'
-    Q1, Q2, Q3, Q4,              // b-o-o-l
-    // States for 'chain' and 'char'
-    Q5, Q6, Q7,                  // c-h-a
-    Q8, Q9,                      // i-n (chain)
-    Q10,                         // r (char)
-    // States for 'false' and 'float'
-    Q11,                         // f
-    Q12, Q13, Q14, Q15,         // a-l-s-e (false)
-    Q16, Q17, Q18, Q19,         // l-o-a-t (float)
-    // States for 'int'
-    Q20, Q21, Q22,              // i-n-t
-    // States for 'true'
-    Q23, Q24, Q25, Q26          // t-r-u-e
-} State;
-
-int isReservedWord(char *lexeme, char ch, int *type) {
-    initial_state = 0;;
+int isReservedWord(char *lexeme) {
+    int current_state = 0; // Initial state
     int i = 0;
 
     while (lexeme[i] != '\0') {
         switch (current_state) {
-            case INITIAL_STATE:
+            case 0: // Initial state
                 switch (lexeme[i]) {
-                    case 'b': current_state = Q1; break;
-                    case 'c': current_state = Q5; break;
-                    case 'f': current_state = Q11; break;
-                    case 'i': current_state = Q20; break;
-                    case 't': current_state = Q23; break;
-                    default: return 0;
+                    case 'b': current_state = 1; break;  // bool
+                    case 'c': current_state = 5; break;  // chain, char
+                    case 'f': current_state = 11; break; // false, float
+                    case 'i': current_state = 20; break; // int
+                    case 't': current_state = 23; break; // true
+                    default: return 0; // Not a reserved word
                 }
                 break;
 
             // States for 'bool'
-            case Q1:
-                if (lexeme[i] == 'o') current_state = Q2;
-                else return 0;
+            case 1: // 'b'
+                current_state = (lexeme[i] == 'o') ? 2 : 0;
                 break;
-            case Q2:
-                if (lexeme[i] == 'o') current_state = Q3;
-                else return 0;
+            case 2: // 'bo'
+                current_state = (lexeme[i] == 'o') ? 3 : 0;
                 break;
-            case Q3:
-                if (lexeme[i] == 'l') current_state = Q4;
-                else return 0;
+            case 3: // 'boo'
+                current_state = (lexeme[i] == 'l') ? 4 : 0;
                 break;
+            case 4: // Final state for 'bool'
+                return (lexeme[i] == '\0') ? 1 : 0;
 
             // States for 'chain' and 'char'
-            case Q5:
-                if (lexeme[i] == 'h') current_state = Q6;
-                else return 0;
+            case 5: // 'c'
+                current_state = (lexeme[i] == 'h') ? 6 : 0;
                 break;
-            case Q6:
-                if (lexeme[i] == 'a') current_state = Q7;
-                else return 0;
+            case 6: // 'ch'
+                current_state = (lexeme[i] == 'a') ? 7 : 0;
                 break;
-            case Q7:
-                if (lexeme[i] == 'i') current_state = Q8;
-                else if (lexeme[i] == 'r' && lexeme[i + 1] == '\0') current_state = Q10;
-                else return 0;
+            case 7: // 'cha'
+                switch (lexeme[i]) {
+                    case 'i': current_state = 8; break;
+                    case 'r': current_state = 10; break;
+                    default: return 0;
+                }
                 break;
-            case Q8:
-                if (lexeme[i] == 'n') current_state = Q9;
-                else return 0;
+            case 8: // 'chai'
+                current_state = (lexeme[i] == 'n') ? 9 : 0;
                 break;
+            case 9: // Final state for 'chain'
+                return (lexeme[i] == '\0') ? 1 : 0;
+            case 10: // Final state for 'char'
+                return (lexeme[i] == '\0') ? 1 : 0;
 
             // States for 'false' and 'float'
-            case Q11:
-                if (lexeme[i] == 'a') current_state = Q12;
-                else if (lexeme[i] == 'l') current_state = Q16;
-                else return 0;
+            case 11: // 'f'
+                switch (lexeme[i]) {
+                    case 'a': current_state = 12; break;
+                    case 'l': current_state = 16; break;
+                    default: return 0;
+                }
                 break;
-            case Q12:
-                if (lexeme[i] == 'l') current_state = Q13;
-                else return 0;
+            case 12: // 'fa'
+                current_state = (lexeme[i] == 'l') ? 13 : 0;
                 break;
-            case Q13:
-                if (lexeme[i] == 's') current_state = Q14;
-                else return 0;
+            case 13: // 'fal'
+                current_state = (lexeme[i] == 's') ? 14 : 0;
                 break;
-            case Q14:
-                if (lexeme[i] == 'e') current_state = Q15;
-                else return 0;
+            case 14: // 'fals'
+                current_state = (lexeme[i] == 'e') ? 15 : 0;
                 break;
-            case Q16:
-                if (lexeme[i] == 'o') current_state = Q17;
-                else return 0;
+            case 15: // Final state for 'false'
+                return (lexeme[i] == '\0') ? 1 : 0;
+            case 16: // 'fl'
+                current_state = (lexeme[i] == 'o') ? 17 : 0;
                 break;
-            case Q17:
-                if (lexeme[i] == 'a') current_state = Q18;
-                else return 0;
+            case 17: // 'flo'
+                current_state = (lexeme[i] == 'a') ? 18 : 0;
                 break;
-            case Q18:
-                if (lexeme[i] == 't') current_state = Q19;
-                else return 0;
+            case 18: // 'floa'
+                current_state = (lexeme[i] == 't') ? 19 : 0;
                 break;
+            case 19: // Final state for 'float'
+                return (lexeme[i] == '\0') ? 1 : 0;
 
             // States for 'int'
-            case Q20:
-                if (lexeme[i] == 'n') current_state = Q21;
-                else return 0;
+            case 20: // 'i'
+                current_state = (lexeme[i] == 'n') ? 21 : 0;
                 break;
-            case Q21:
-                if (lexeme[i] == 't') current_state = Q22;
-                else return 0;
+            case 21: // 'in'
+                current_state = (lexeme[i] == 't') ? 22 : 0;
                 break;
+            case 22: // Final state for 'int'
+                return (lexeme[i] == '\0') ? 1 : 0;
 
             // States for 'true'
-            case Q23:
-                if (lexeme[i] == 'r') current_state = Q24;
-                else return 0;
+            case 23: // 't'
+                current_state = (lexeme[i] == 'r') ? 24 : 0;
                 break;
-            case Q24:
-                if (lexeme[i] == 'u') current_state = Q25;
-                else return 0;
+            case 24: // 'tr'
+                current_state = (lexeme[i] == 'u') ? 25 : 0;
                 break;
-            case Q25:
-                if (lexeme[i] == 'e') current_state = Q26;
-                else return 0;
+            case 25: // 'tru'
+                current_state = (lexeme[i] == 'e') ? 26 : 0;
                 break;
+            case 26: // Final state for 'true'
+                return (lexeme[i] == '\0') ? 1 : 0;
+
+            default:
+                return 0; // Not a valid reserved word
         }
         i++;
     }
 
-    // Check final state and assign token type
-    switch (current_state) {
-        case Q4:  *type = BOOL_TOKEN; return 1;   // bool
-        case Q9:  *type = CHAIN_TOKEN; return 1;  // chain
-        case Q10: *type = CHAR_TOKEN; return 1;   // char
-        case Q15: *type = FALSE_TOKEN; return 1;  // false
-        case Q19: *type = FLOAT_TOKEN; return 1;  // float
-        case Q22: *type = INT_TOKEN; return 1;    // int
-        case Q26: *type = TRUE_TOKEN; return 1;   // true
-        default:  return 0;
-    }
+    return 0; // If not accepted by the DFA
 }
