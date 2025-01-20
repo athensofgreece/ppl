@@ -328,3 +328,6 @@ int isKeyword(char *lexeme, int *type) {
         case 71: *type = STING_TOKEN; return 1;     // sting
         case 76: *type = SWTICH_TOKEN; return 1;    // switch
         case 81: *type = WHILE_TOKEN; return 1;     // while
+        default: return 0;
+    }
+}
