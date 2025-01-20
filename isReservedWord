@@ -1,4 +1,4 @@
-int isReservedWord(char *lexeme) {
+int isReservedWord(char *lexeme, char ch, int *type) {
     int current_state = 0; // Initial state
     int i = 0;
 
@@ -26,7 +26,7 @@ int isReservedWord(char *lexeme) {
                 current_state = (lexeme[i] == 'l') ? 4 : 0;
                 break;
             case 4: // Final state for 'bool'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = BOOL_TOKEN, 1) : 0;
 
             // States for 'chain' and 'char'
             case 5: // 'c'
@@ -46,9 +46,9 @@ int isReservedWord(char *lexeme) {
                 current_state = (lexeme[i] == 'n') ? 9 : 0;
                 break;
             case 9: // Final state for 'chain'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = CHAIN_TOKEN, 1) : 0;
             case 10: // Final state for 'char'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = CHAR_TOKEN, 1) : 0;
 
             // States for 'false' and 'float'
             case 11: // 'f'
@@ -68,7 +68,7 @@ int isReservedWord(char *lexeme) {
                 current_state = (lexeme[i] == 'e') ? 15 : 0;
                 break;
             case 15: // Final state for 'false'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = FALSE_TOKEN, 1) : 0;
             case 16: // 'fl'
                 current_state = (lexeme[i] == 'o') ? 17 : 0;
                 break;
@@ -79,7 +79,7 @@ int isReservedWord(char *lexeme) {
                 current_state = (lexeme[i] == 't') ? 19 : 0;
                 break;
             case 19: // Final state for 'float'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = FLOAT_TOKEN, 1) : 0;
 
             // States for 'int'
             case 20: // 'i'
@@ -89,7 +89,7 @@ int isReservedWord(char *lexeme) {
                 current_state = (lexeme[i] == 't') ? 22 : 0;
                 break;
             case 22: // Final state for 'int'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = INT_TOKEN, 1) : 0;
 
             // States for 'true'
             case 23: // 't'
@@ -102,7 +102,7 @@ int isReservedWord(char *lexeme) {
                 current_state = (lexeme[i] == 'e') ? 26 : 0;
                 break;
             case 26: // Final state for 'true'
-                return (lexeme[i] == '\0') ? 1 : 0;
+                return (lexeme[i] == '\0') ? (*type = TRUE_TOKEN, 1) : 0;
 
             default:
                 return 0; // Not a valid reserved word
@@ -110,5 +110,15 @@ int isReservedWord(char *lexeme) {
         i++;
     }
 
-    return 0; // If not accepted by the DFA
+    // Check final states and assign token types
+    switch (current_state) {
+        case 4:  *type = BOOL_TOKEN; return 1;   // bool
+        case 9:  *type = CHAIN_TOKEN; return 1;  // chain
+        case 10: *type = CHAR_TOKEN; return 1;   // char
+        case 15: *type = FALSE_TOKEN; return 1;  // false
+        case 19: *type = FLOAT_TOKEN; return 1;  // float
+        case 22: *type = INT_TOKEN; return 1;    // int
+        case 26: *type = TRUE_TOKEN; return 1;   // true
+        default: return 0;
+    }
 }
