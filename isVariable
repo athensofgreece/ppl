@@ -5,66 +5,89 @@ int isIdentifier(char *lexeme, char ch, int *type, FILE *file) {
     while (1) {
         switch (state) {
             case 0: // Start state
-                if (ch == '#' || ch == '~') {
-                    state = (ch == '#') ? 3 : 1; // Transition based on identifier type
-                    lexeme[lexeme_index++] = ch; // Store the first character
-                    ch = getNextChar(file);
-                } else {
-                    return 0; // Not an identifier
+                switch (ch) {
+                    case '#':
+                        state = 3; // Transition to variable identifier state
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    case '~':
+                        state = 1; // Transition to function identifier state
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        return 0; // Not an identifier
                 }
                 break;
 
             case 1: // Function identifier (~) expecting lowercase letter
-                if (islower(ch)) {
-                    state = 2; // Transition to accepting state
-                    lexeme[lexeme_index++] = ch;
-                    ch = getNextChar(file);
-                } else {
-                    while (!(isspace(ch) || ch == '\n' || ch == '\t')) { // Capture invalid string
+                switch (ch) {
+                    case 'a' ... 'z': // Lowercase letters
+                        state = 2; // Transition to accepting state
                         lexeme[lexeme_index++] = ch;
                         ch = getNextChar(file);
-                    }
-                    ungetc(ch, file);
-                    *type = INVALID;
-                    return 0; // Invalid identifier
+                        break;
+                    default:
+                        while (!(isspace(ch) || ch == '\n' || ch == '\t')) {
+                            lexeme[lexeme_index++] = ch;
+                            ch = getNextChar(file);
+                        }
+                        ungetc(ch, file); // Put back invalid character
+                        *type = INVALID;
+                        return 0; // Invalid function identifier
                 }
                 break;
 
             case 2: // Function identifier accepting state with self-loop for alphanumerics
-                while (isalpha(ch) || isdigit(ch)) {
-                    lexeme[lexeme_index++] = ch;
-                    ch = getNextChar(file);
-                }
-                ungetc(ch, file);
-                *type = FUNC_IDENT;
-                lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
-                return 1; // Valid function identifier
-
-            case 3: // Variable identifier (#) expecting lowercase letter
-                if (islower(ch)) {
-                    state = 4; // Transition to accepting state
-                    lexeme[lexeme_index++] = ch;
-                    ch = getNextChar(file);
-                } else {
-                    while (!(isspace(ch) || ch == '\n' || ch == '\t')) { // Capture invalid string
+                switch (ch) {
+                    case 'a' ... 'z': // Lowercase letters
+                    case 'A' ... 'Z': // Uppercase letters
+                    case '0' ... '9': // Digits
                         lexeme[lexeme_index++] = ch;
                         ch = getNextChar(file);
-                    }
-                    ungetc(ch, file);
-                    *type = INVALID;
-                    return 0; // Invalid identifier
+                        break;
+                    default:
+                        ungetc(ch, file); // End of identifier
+                        lexeme[lexeme_index] = '\0'; // Null-terminate lexeme
+                        *type = FUNC_IDENT;
+                        return 1; // Valid function identifier
+                }
+                break;
+
+            case 3: // Variable identifier (#) expecting lowercase letter
+                switch (ch) {
+                    case 'a' ... 'z': // Lowercase letters
+                        state = 4; // Transition to accepting state
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        while (!(isspace(ch) || ch == '\n' || ch == '\t')) {
+                            lexeme[lexeme_index++] = ch;
+                            ch = getNextChar(file);
+                        }
+                        ungetc(ch, file); // Put back invalid character
+                        *type = INVALID;
+                        return 0; // Invalid variable identifier
                 }
                 break;
 
             case 4: // Variable identifier accepting state with self-loop for alphanumerics
-                while (isalpha(ch) || isdigit(ch)) {
-                    lexeme[lexeme_index++] = ch;
-                    ch = getNextChar(file);
+                switch (ch) {
+                    case 'a' ... 'z': // Lowercase letters
+                    case 'A' ... 'Z': // Uppercase letters
+                    case '0' ... '9': // Digits
+                        lexeme[lexeme_index++] = ch;
+                        ch = getNextChar(file);
+                        break;
+                    default:
+                        ungetc(ch, file); // End of identifier
+                        lexeme[lexeme_index] = '\0'; // Null-terminate lexeme
+                        *type = VAR_IDENT;
+                        return 1; // Valid variable identifier
                 }
-                ungetc(ch, file);
-                *type = VAR_IDENT;
-                lexeme[lexeme_index] = '\0'; // Null-terminate the lexeme
-                return 1; // Valid variable identifier
+                break;
 
             default:
                 *type = INVALID;
