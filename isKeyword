@@ -1,333 +1,147 @@
-int isKeyword(char *lexeme, int *type) {
-    int current_state = 0; // Initial state
-    int i = 0;
+int isKeyword(char *lexeme, char ch, int *type) {
+    int startIdx = 0;
 
-    while (lexeme[i] != '\0') {
-        switch (current_state) {
-            case 0: // Initial state
-                switch (lexeme[i]) {
-                    case 'b': current_state = 1; break;  // beegin, beegone, buzz, buzzout
-                    case 'c': current_state = 16; break; // case
-                    case 'd': current_state = 20; break; // do, default
-                    case 'e': current_state = 28; break; // else, elseif
-                    case 'f': current_state = 34; break; // for
-                    case 'g': current_state = 37; break; // gather
-                    case 'h': current_state = 43; break; // hive, hover
-                    case 'i': current_state = 51; break; // if
-                    case 'q': current_state = 53; break; // queenbee
-                    case 'r': current_state = 61; break; // return
-                    case 's': current_state = 67; break; // sting, switch
-                    case 'w': current_state = 77; break; // while
-                    default: return 0; // Not a keyword
+    switch (lexeme[startIdx]) {
+        case 'b':
+            if (lexeme[startIdx + 1] == 'e' && 
+                lexeme[startIdx + 2] == 'e') {
+                if (lexeme[startIdx + 3] == 'g') {
+                    if (lexeme[startIdx + 4] == 'i' &&
+                        lexeme[startIdx + 5] == 'n' && 
+                        lexeme[startIdx + 6] == '\0') {
+                        *type = BEEGIN_TOKEN;
+                        return 1;
+                    }
+                    else if (lexeme[startIdx + 4] == 'o' &&
+                            lexeme[startIdx + 5] == 'n' &&
+                            lexeme[startIdx + 6] == 'e' &&
+                            lexeme[startIdx + 7] == '\0') {
+                        *type = BEEGONE_TOKEN;
+                        return 1;
+                    }
                 }
-                break;
-
-            case 1: // 'b'
-                switch (lexeme[i]) {
-                    case 'e': current_state = 2; break;  // beegin, beegone
-                    case 'u': current_state = 10; break; // buzz, buzzout
-                    default: return 0;
+            }
+            else if (lexeme[startIdx + 1] == 'u' &&
+                     lexeme[startIdx + 2] == 'z' &&
+                     lexeme[startIdx + 3] == 'z') {
+                if (lexeme[startIdx + 4] == '\0') {
+                    *type = BUZZ_TOKEN;
+                    return 1;
                 }
-                break;
-            case 2: // 'be'
-                current_state = (lexeme[i] == 'e') ? 3 : 0;
-                break;
-            case 3: // 'bee'
-                current_state = (lexeme[i] == 'g') ? 4 : 0;
-                break;
-            case 4: // 'beeg'
-                switch (lexeme[i]) {
-                    case 'i': current_state = 5; break;  // beegin
-                    case 'o': current_state = 7; break;  // beegone
-                    default: return 0;
+                else if (lexeme[startIdx + 4] == 'o' &&
+                         lexeme[startIdx + 5] == 'u' &&
+                         lexeme[startIdx + 6] == 't' &&
+                         lexeme[startIdx + 7] == '\0') {
+                    *type = BUZZOUT_TOKEN;
+                    return 1;
                 }
-                break;
-            case 5: // 'beegi'
-                current_state = (lexeme[i] == 'n') ? 6 : 0;
-                break;
-            case 6: // Final state for 'beegin'
-                return (lexeme[i] == '\0') ? (*type = BEEGIN_TOKEN, 1) : 0;
-            case 7: // 'beego'
-                current_state = (lexeme[i] == 'n') ? 8 : 0;
-                break;
-            case 8: // 'beegon'
-                current_state = (lexeme[i] == 'e') ? 9 : 0;
-                break;
-            case 9: // Final state for 'beegone'
-                return (lexeme[i] == '\0') ? (*type = BEEGONE_TOKEN, 1) : 0;
-            case 10: // 'bu'
-                current_state = (lexeme[i] == 'z') ? 11 : 0;
-                break;
-            case 11: // 'buz'
-                current_state = (lexeme[i] == 'z') ? 12 : 0;
-                break;
-            case 12: // 'buzz'
-                switch (lexeme[i]) {
-                    case '\0': return (*type = BUZZ_TOKEN, 1); // Final state for 'buzz'
-                    case 'o': current_state = 13; break;      // buzzout
-                    default: return 0;
+            }
+            else if (lexeme[startIdx + 1] == 'o' && 
+                     lexeme[startIdx + 2] == 'o' && 
+                     lexeme[startIdx + 3] == 'l' && 
+                     lexeme[startIdx + 4] == '\0') {
+                *type = BOOL_TOKEN;
+                return 1;
+            }
+            break;
+
+        case 'c':
+            if (lexeme[startIdx + 1] == 'a' &&
+                lexeme[startIdx + 2] == 's' &&
+                lexeme[startIdx + 3] == 'e' &&
+                lexeme[startIdx + 4] == '\0') {
+                *type = CASE_TOKEN;
+                return 1;
+            }
+            else if (lexeme[startIdx + 1] == 'h' && 
+                     lexeme[startIdx + 2] == 'a') {
+                if (lexeme[startIdx + 3] == 'i' && 
+                    lexeme[startIdx + 4] == 'n' && 
+                    lexeme[startIdx + 5] == '\0') {
+                    *type = CHAIN_TOKEN;
+                    return 1;
                 }
-                break;
-            case 13: // 'buzzo'
-                current_state = (lexeme[i] == 'u') ? 14 : 0;
-                break;
-            case 14: // 'buzzou'
-                current_state = (lexeme[i] == 't') ? 15 : 0;
-                break;
-            case 15: // Final state for 'buzzout'
-                return (lexeme[i] == '\0') ? (*type = BUZZOUT_TOKEN, 1) : 0;
-
-            // States for 'case'
-            case 16: // 'c'
-                current_state = (lexeme[i] == 'a') ? 17 : 0;
-                break;
-            case 17: // 'ca'
-                current_state = (lexeme[i] == 's') ? 18 : 0;
-                break;
-            case 18: // 'cas'
-                current_state = (lexeme[i] == 'e') ? 19 : 0;
-                break;
-            case 19: // Final state for 'case'
-                return (lexeme[i] == '\0') ? (*type = CASE_TOKEN, 1) : 0;
-
-            // States for 'do' and 'default'
-            case 20: // 'd'
-                switch (lexeme[i]) {
-                    case 'o': current_state = 21; break;
-                    case 'e': current_state = 22; break;
-                    default: return 0;
+                else if (lexeme[startIdx + 3] == 'r' && 
+                         lexeme[startIdx + 4] == '\0') {
+                    *type = CHAR_TOKEN;
+                    return 1;
                 }
-                break;
-            case 21: // Final state for 'do'
-                return (lexeme[i] == '\0') ? (*type = DO_TOKEN, 1) : 0;
-            case 22: // 'de'
-                current_state = (lexeme[i] == 'f') ? 23 : 0;
-                break;
-            case 23: // 'def'
-                current_state = (lexeme[i] == 'a') ? 24 : 0;
-                break;
-            case 24: // 'defa'
-                current_state = (lexeme[i] == 'u') ? 25 : 0;
-                break;
-            case 25: // 'defau'
-                current_state = (lexeme[i] == 'l') ? 26 : 0;
-                break;
-            case 26: // 'defaul'
-                current_state = (lexeme[i] == 't') ? 27 : 0;
-                break;
-            case 27: // Final state for 'default'
-                return (lexeme[i] == '\0') ? (*type = DEFAULT_TOKEN, 1) : 0;
+            }
+            break;
 
-            // States for 'else' and 'elseif'
-            case 28: // 'e'
-                current_state = (lexeme[i] == 'l') ? 29 : 0;
-                break;
-            case 29: // 'el'
-                current_state = (lexeme[i] == 's') ? 30 : 0;
-                break;
-            case 30: // 'els'
-                current_state = (lexeme[i] == 'e') ? 31 : 0;
-                break;
-            case 31: // Final state for 'else'
-                switch (lexeme[i]) {
-                    case '\0': return (*type = ELSE_TOKEN, 1);
-                    case 'i': current_state = 32; break;
-                    default: return 0;
+        case 'd':
+            if (lexeme[startIdx + 1] == 'e' &&
+                lexeme[startIdx + 2] == 'f' &&
+                lexeme[startIdx + 3] == 'a' &&
+                lexeme[startIdx + 4] == 'u' &&
+                lexeme[startIdx + 5] == 'l' &&
+                lexeme[startIdx + 6] == 't' &&
+                lexeme[startIdx + 7] == '\0') {
+                *type = DEFAULT_TOKEN;
+                return 1;
+            }
+            else if (lexeme[startIdx + 1] == 'o' &&
+                     lexeme[startIdx + 2] == '\0') {
+                *type = DO_TOKEN;
+                return 1;
+            }
+            break;
+
+        case 'e':
+            if (lexeme[startIdx + 1] == 'l' &&
+                lexeme[startIdx + 2] == 's' &&
+                lexeme[startIdx + 3] == 'e') {
+                if (lexeme[startIdx + 4] == '\0') {
+                    *type = ELSE_TOKEN;
+                    return 1;
                 }
-                break;
-            case 32: // 'elsei'
-                current_state = (lexeme[i] == 'f') ? 33 : 0;
-                break;
-            case 33: // Final state for 'elseif'
-                return (lexeme[i] == '\0') ? (*type = ELSEIF_TOKEN, 1) : 0;
-
-            // States for 'for'
-            case 34:
-                current_state = (lexeme[i] == 'o') ? 35 : 0;
-                break;
-            case 35:
-                current_state = (lexeme[i] == 'r') ? 36 : 0;
-                break;
-            case 36: // Final state for 'for'
-                return (lexeme[i] == '\0') ? (*type = FOR_TOKEN, 1) : 0;
-
-            // States for 'gather'
-            case 37:
-                current_state = (lexeme[i] == 'a') ? 38 : 0;
-                break;
-            case 38:
-                current_state = (lexeme[i] == 't') ? 39 : 0;
-                break;
-            case 39:
-                current_state = (lexeme[i] == 'h') ? 40 : 0;
-                break;
-            case 40:
-                current_state = (lexeme[i] == 'e') ? 41 : 0;
-                break;
-            case 41:
-                current_state = (lexeme[i] == 'r') ? 42 : 0;
-                break;
-            case 42: // Final state for 'gather'
-                return (lexeme[i] == '\0') ? (*type = GATHER_TOKEN, 1) : 0;
-
-            // States for 'hive' and 'hover'
-            case 43:
-                switch (lexeme[i]) {
-                    case 'i': current_state = 44; break; // hive
-                    case 'o': current_state = 47; break; // hover
-                    default: return 0;
+                else if (lexeme[startIdx + 4] == 'i' &&
+                         lexeme[startIdx + 5] == 'f' &&
+                         lexeme[startIdx + 6] == '\0') {
+                    *type = ELSEIF_TOKEN;
+                    return 1;
                 }
-                break;
-            case 44:
-                current_state = (lexeme[i] == 'v') ? 45 : 0;
-                break;
-            case 45:
-                current_state = (lexeme[i] == 'e') ? 46 : 0;
-                break;
-            case 46: // Final state for 'hive'
-                return (lexeme[i] == '\0') ? (*type = HIVE_TOKEN, 1) : 0;
+            }
+            break;
 
-            case 47:
-                current_state = (lexeme[i] == 'v') ? 48 : 0;
-                break;
-            case 48:
-                current_state = (lexeme[i] == 'e') ? 49 : 0;
-                break;
-            case 49:
-                current_state = (lexeme[i] == 'r') ? 50 : 0;
-                break;
-            case 50: // Final state for 'hover'
-                return (lexeme[i] == '\0') ? (*type = HOVER_TOKEN, 1) : 0;
+        case 'f':
+            if (lexeme[startIdx + 1] == 'a' && 
+                lexeme[startIdx + 2] == 'l' && 
+                lexeme[startIdx + 3] == 's' && 
+                lexeme[startIdx + 4] == 'e' && 
+                lexeme[startIdx + 5] == '\0') {
+                *type = FALSE_TOKEN;
+                return 1;
+            }
+            else if (lexeme[startIdx + 1] == 'l' && 
+                     lexeme[startIdx + 2] == 'o' && 
+                     lexeme[startIdx + 3] == 'a' && 
+                     lexeme[startIdx + 4] == 't' && 
+                     lexeme[startIdx + 5] == '\0') {
+                *type = FLOAT_TOKEN;
+                return 1;
+            }
+            break;
 
-            // States for 'if'
-            case 51:
-                current_state = (lexeme[i] == 'f') ? 52 : 0;
-                break;
-            case 52: // Final state for 'if'
-                return (lexeme[i] == '\0') ? (*type = IF_TOKEN, 1) : 0;
+        case 'i':
+            if (lexeme[startIdx + 1] == 'n' && 
+                lexeme[startIdx + 2] == 't' && 
+                lexeme[startIdx + 3] == '\0') {
+                *type = INT_TOKEN;
+                return 1;
+            }
+            break;
 
-            // States for 'queenbee'
-            case 53:
-                current_state = (lexeme[i] == 'u') ? 54 : 0;
-                break;
-            case 54:
-                current_state = (lexeme[i] == 'e') ? 55 : 0;
-                break;
-            case 55:
-                current_state = (lexeme[i] == 'e') ? 56 : 0;
-                break;
-            case 56:
-                current_state = (lexeme[i] == 'n') ? 57 : 0;
-                break;
-            case 57:
-                current_state = (lexeme[i] == 'b') ? 58 : 0;
-                break;
-            case 58:
-                current_state = (lexeme[i] == 'e') ? 59 : 0;
-                break;
-            case 59:
-                current_state = (lexeme[i] == 'e') ? 60 : 0;
-                break;
-            case 60: // Final state for 'queenbee'
-                return (lexeme[i] == '\0') ? (*type = QUEENBEE_TOKEN, 1) : 0;
-
-            // States for 'return'
-            case 61:
-                current_state = (lexeme[i] == 'e') ? 62 : 0;
-                break;
-            case 62:
-                current_state = (lexeme[i] == 't') ? 63 : 0;
-                break;
-            case 63:
-                current_state = (lexeme[i] == 'u') ? 64 : 0;
-                break;
-            case 64:
-                current_state = (lexeme[i] == 'r') ? 65 : 0;
-                break;
-            case 65:
-                current_state = (lexeme[i] == 'n') ? 66 : 0;
-                break;
-            case 66: // Final state for 'return'
-                return (lexeme[i] == '\0') ? (*type = RETURN_TOKEN, 1) : 0;
-
-            // States for 'sting' and 'switch'
-            case 67:
-                switch (lexeme[i]) {
-                    case 't': current_state = 68; break; // sting
-                    case 'w': current_state = 72; break; // switch
-                    default: return 0;
-                }
-                break;
-            case 68:
-                current_state = (lexeme[i] == 'i') ? 69 : 0;
-                break;
-            case 69:
-                current_state = (lexeme[i] == 'n') ? 70 : 0;
-                break;
-            case 70:
-                current_state = (lexeme[i] == 'g') ? 71 : 0;
-                break;
-            case 71: // Final state for 'sting'
-                return (lexeme[i] == '\0') ? (*type = STING_TOKEN, 1) : 0;
-
-            case 72: // switch
-                current_state = (lexeme[i] == 'i') ? 73 : 0;
-                break;
-            case 73:
-                current_state = (lexeme[i] == 't') ? 74 : 0;
-                break;
-            case 74:
-                current_state = (lexeme[i] == 'c') ? 75 : 0;
-                break;
-            case 75:
-                current_state = (lexeme[i] == 'h') ? 76 : 0;
-                break;
-            case 76: // Final state for 'switch'
-                return (lexeme[i] == '\0') ? (*type = SWITCH_TOKEN, 1) : 0;
-
-            // States for 'while'
-            case 77:
-                current_state = (lexeme[i] == 'h') ? 78 : 0;
-                break;
-            case 78:
-                current_state = (lexeme[i] == 'i') ? 79 : 0;
-                break;
-            case 79:
-                current_state = (lexeme[i] == 'l') ? 80 : 0;
-                break;
-            case 80:
-                current_state = (lexeme[i] == 'e') ? 81 : 0;
-                break;
-            case 81: // Final state for 'while'
-                return (lexeme[i] == '\0') ? (*type = WHILE_TOKEN, 1) : 0;
-
-            default:
-                return 0; // Not a valid keyword
-        }
-        i++;
+        case 't':
+            if (lexeme[startIdx + 1] == 'r' && 
+                lexeme[startIdx + 2] == 'u' && 
+                lexeme[startIdx + 3] == 'e' && 
+                lexeme[startIdx + 4] == '\0') {
+                *type = TRUE_TOKEN;
+                return 1;
+            }
+            break;
     }
 
-    // Check final states and assign token types
-    switch (current_state) {
-        case 6:  *type = BEEGIN_TOKEN; return 1;    // beegin
-        case 9:  *type = BEEGONE_TOKEN; return 1;   // beegone
-        case 12: *type = BUZZ_TOKEN; return 1;      // buzz
-        case 15: *type = BUZZOUT_TOKEN; return 1;   // buzzout
-        case 19: *type = CASE_TOKEN; return 1;      // case
-        case 21: *type = DO_TOKEN; return 1;        // do
-        case 27: *type = DEFAULT_TOKEN; return 1;   // default
-        case 31: *type = ELSE_TOKEN; return 1;      // else
-        case 33: *type = ELSEIF_TOKEN; return 1;    // elseif
-        case 36: *type = FOR_TOKEN; return 1;       // for
-        case 42: *type = GATHER_TOKEN; return 1;    // gather
-        case 46: *type = HIVE_TOKEN; return 1;      // hive
-        case 50: *type = HOVER_TOKEN; return 1;     // hover
-        case 52: *type = IF_TOKEN; return 1;        // if
-        case 60: *type = QUEENBEE_TOKEN; return 1;  // queenbee
-        case 66: *type = RETURN_TOKEN; return 1;    // return
-        case 71: *type = STING_TOKEN; return 1;     // sting
-        case 76: *type = SWTICH_TOKEN; return 1;    // switch
-        case 81: *type = WHILE_TOKEN; return 1;     // while
-        default: return 0;
-    }
+    return 0; // Not a keyword or reserved word
 }
