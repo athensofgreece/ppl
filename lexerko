@@ -15,129 +15,129 @@ int char_class;
 #define DIGIT 2
 #define OTHER 3
 
-
 const char* token_type(TokenType type){
     switch(type){
-     //identifiers
-        case 'VAR_IDENT': return "VAR_IDENT";
-        case 'FUNC_IDENT': return "FUNC_IDENT";
-    //arithmetic operators
-        case 'ADDITION': return "ADDITION";
-        case 'SUBTRACTION': return "SUBTRACTION";
-        case 'MULTIPLICATION': return "MULTIPLICATION";
-        case 'DIVISION': return "DIVISION";
-        case 'INT_DIVISION': return "INT_DIVISION";
-        case 'ASSIGNMENT_OP': return "ASSIGNMENT_OP";
-    //relational operators
-        case 'GREATER_THAN': return "GREATER_THAN";
-        case 'LESS_THAN': return "LESS_THAN";
-        case 'IS_EQUAL_TO': return "IS_EQUAL_TO";
-        case 'GREATER_EQUAL': return "GREATER_EQUAL";
-        case 'LESS_EQUAL': return "LESS_EQUAL";
-        case 'NOT_EQUAL': return "NOT_EQUAL";
-    //logical operators
-        case 'LOG_AND': return "AND";
-        case 'LOG_OR': return "OR";
-        case 'LOG_NOT': return "NOT";
-    //unary operators
-        case 'INCRE': return "INCREMENT";
-        case 'DECRE': return "DECREMENT";
-    //delimeters
-        case 'SEMICOLON': return "SEMICOLON";
-        case 'COMMA': return "COMMA";
-        case 'LEFT_PAREN': return "LEFT_PAREN";
-        case 'RIGHT_PAREN': return "RIGHT_PAREN";
-        case 'LEFT_BRACKET': return "LEFT_BRACKET";
-        case 'RIGHT_BRACKET': return "RIGHT_BRACKET";
-        case 'LEFT_BRACE': return "LEFT_BRACE";
-        case 'RIGHT_BRACE': return "RIGHT_BRACE";
-        case 'DBL_QUOTE': return "DBL_QUOTE";
-        case 'SNGL_QUOTE': return "SNGL_QUOTE";
-        case 'COLON': return "COLON";
-
-    //keywords
-        case 'BEEGIN': return "BEEGIN_TOKEN";
-        case 'BEEGONE': return "BEEGONE_TOKEN";
-        case 'BOOL': return "BOOL_TOKEN";
-        case 'BUZZ': return "BUZZ_TOKEN";
-        case 'BUZZOUT': return "BUZZOUT_TOKEN";
-        case 'CASE': return "CASE_TOKEN";
-        case 'CHAR': return "CHAR_TOKEN";
-        case 'CHAIN': return "CHAIN_TOKEN";
-        case 'DEFAULT': return "DEFAULT_TOKEN";
-        case 'DO': return "DO_TOKEN";
-        case 'ELSEIF': return "ELSEIF_TOKEN";
-        case 'ELSE': return "ELSE_TOKEN";
-        case 'FALSE': return "FALSE_TOKEN";
-        case 'FLOAT': return "FLOAT_TOKEN";
-        case 'FOR': return "FOR_TOKEN";
-        case 'GATHER': return "GATHER_TOKEN";
-        case 'HIVE': return "HIVE_TOKEN";
-        case 'HOVER': return "HOVER_TOKEN";
-        case 'IF': return "IF_TOKEN";
-        case 'INT': return "INT_TOKEN";
-        case 'QUEENBEE': return "QUEENBEE_TOKEN";
-        case 'RETURN': return "RETURN_TOKEN";
-        case 'STING': return "STING_TOKEN";
-        case 'SWITCH': return "SWITCH_TOKEN";
-        case 'TRUE': return "TRUE_TOKEN";
-        case 'WHILE': return "WHILE_TOKEN";
-        default: return "UNKNOWN_TOKEN";
-    //noise word
-        case 'RETURN_VALUE': "NOISEWORD";
-    //literals
-        case 'INTEGER': return "INTEGER";
-        case 'FLOAT': return "FLOAT";
-        case 'CHAR_CONST': return "CHARACTER_CONSTANT";
-
+        case VAR_IDENT: return "VAR_IDENT";
+        case FUNC_IDENT: return "FUNC_IDENT";
+        case ADDITION: return "ADDITION";
+        case SUBTRACTION: return "SUBTRACTION";
+        case MULTIPLICATION: return "MULTIPLICATION";
+        case DIVISION: return "DIVISION";
+        case INT_DIVISION: return "INT_DIVISION";
+        case ASSIGNMENT_OP: return "ASSIGNMENT_OP";
+        case GREATER_THAN: return "GREATER_THAN";
+        case LESS_THAN: return "LESS_THAN";
+        case IS_EQUAL_TO: return "IS_EQUAL_TO";
+        case GREATER_EQUAL: return "GREATER_EQUAL";
+        case LESS_EQUAL: return "LESS_EQUAL";
+        case NOT_EQUAL: return "NOT_EQUAL";
+        case LOG_AND: return "AND";
+        case LOG_OR: return "OR";
+        case LOG_NOT: return "NOT";
+        case INCRE: return "INCREMENT";
+        case DECRE: return "DECREMENT";
+        case SEMICOLON: return "SEMICOLON";
+        case COMMA: return "COMMA";
+        case LEFT_PAREN: return "LEFT_PAREN";
+        case RIGHT_PAREN: return "RIGHT_PAREN";
+        case LEFT_BRACKET: return "LEFT_BRACKET";
+        case RIGHT_BRACKET: return "RIGHT_BRACKET";
+        case LEFT_BRACE: return "LEFT_BRACE";
+        case RIGHT_BRACE: return "RIGHT_BRACE";
+        case DBL_QUOTE: return "DBL_QUOTE";
+        case SNGL_QUOTE: return "SNGL_QUOTE";
+        case COLON: return "COLON";
+        case BEEGIN: return "BEEGIN_TOKEN";
+        case BEEGONE: return "BEEGONE_TOKEN";
+        case BOOL: return "BOOL_TOKEN";
+        case BUZZ: return "BUZZ_TOKEN";
+        case BUZZOUT: return "BUZZOUT_TOKEN";
+        case CASE: return "CASE_TOKEN";
+        case CHAR: return "CHAR_TOKEN";
+        case CHAIN: return "CHAIN_TOKEN";
+        case DEFAULT: return "DEFAULT_TOKEN";
+        case DO: return "DO_TOKEN";
+        case ELSEIF: return "ELSEIF_TOKEN";
+        case ELSE: return "ELSE_TOKEN";
+        case FALSE: return "FALSE_TOKEN";
+        case FLOAT: return "FLOAT_TOKEN";
+        case FOR: return "FOR_TOKEN";
+        case GATHER: return "GATHER_TOKEN";
+        case HIVE: return "HIVE_TOKEN";
+        case HOVER: return "HOVER_TOKEN";
+        case IF: return "IF_TOKEN";
+        case INT: return "INT_TOKEN";
+        case QUEENBEE: return "QUEENBEE_TOKEN";
+        case RETURN: return "RETURN_TOKEN";
+        case STING: return "STING_TOKEN";
+        case SWITCH: return "SWITCH_TOKEN";
+        case TRUE: return "TRUE_TOKEN";
+        case WHILE: return "WHILE_TOKEN";
+        case RETURN_VALUE: return "NOISEWORD";
+        case INTEGER: return "INTEGER";
+        case FLOAT_LIT: return "FLOAT";
+        case CHAR_CONST: return "CHARACTER_CONSTANT";
         default: return "INVALID";
     }
 }
 
-void print_token (const Token *token){
+void print_token(const Token *token){
     printf("TOKEN: %-20s | TYPE: %-30s | LINE: %zu\n", 
-    token->value, token_type(token->type), token->line_num);
+           token->value, token_type(token->type), token->line_num);
 }
 
 void write_symbol_table(const Token *token, FILE *symbol_table){
     fprintf(symbol_table, "TOKEN: %-20s | TYPE: %-30s | LINE: %zu\n",
-           token->value, token_type(token->type), token->line_num);
+            token->value, token_type(token->type), token->line_num);
 }
 
 void free_token(Token *token){
-    if (token -> value) free(token -> value);
+    if (token->value) free(token->value);
     free(token);
 }
 
-Token *isIntFloat (const char *source, int *index){
+Token *create_token(TokenType type, const char *value, size_t line_num) {
+    Token *token = (Token *)malloc(sizeof(Token));
+    if (token) {
+        token->type = type;
+        token->value = strdup(value);
+        if (!token->value) {
+            free(token);
+            return NULL;
+        }
+        token->line_num = line_num;
+    }
+    return token;
+}
+
+Token *isIntFloat(const char *source, int *index){
     char buffer[100] = {0};
     int buff_index = 0;
     int decimal = 0;
     int flagged = 0;
 
-    while (isdigit(source[*index]) || (source[*index] == '.') || (isalpha(source[*index]) || ispunct(source[*index])))
-    {
+    while (isdigit(source[*index]) || (source[*index] == '.') || (isalpha(source[*index]) || ispunct(source[*index]))) {
         if (source[*index] == '.') {
-            has_decimal++;
-        } else if (isalpha(source[*index]) || strchr("@#", source[*index])){ // Flags for containing letters and special characters
-            is_flagged++;
-        } else if (ispunct(source[*index]) && !(strchr("@#", source[*index]))){ // Exits loop if an operator is seen
+            decimal++;
+        } else if (isalpha(source[*index]) || strchr("@#", source[*index])){ 
+            flagged++;
+        } else if (ispunct(source[*index]) && !(strchr("@#", source[*index]))){ 
             break;
         }
 
         buffer[buff_index++] = source[(*index)++];
     }
 
-    if(decimal > 1 || flagged){
-        fprintf (stderr, "Error: Invalid token '%s' at line %zu\n", buffer, line_number);
-        return create_token(INVALID, buffer, line_number);
+    if (decimal > 1 || flagged){
+        fprintf(stderr, "Error: Invalid token '%s' at line %zu\n", buffer, line);
+        return create_token(INVALID, buffer, line);
     }
 
-    TokenType type = decimal ? FLOAT : INTEGER;
-    return create_token (type, buffer, line_number);
+    TokenType type = decimal ? FLOAT_LIT : INTEGER;
+    return create_token(type, buffer, line);
 }
 
-Token *isString (const char *source, int *index){
+Token *isString(const char *source, int *index){
     char buffer[300] = {0};
     int buff_index = 0;
     int format = 0;
@@ -145,534 +145,217 @@ Token *isString (const char *source, int *index){
 
     (*index)++;
 
-    while (source [*index] != '"' && source [*index] != '\0'){
-            if (format != 0){
-                if (strchr("dcfs", source[*index])){
-                    format_specifier++;
-                }
-
-                buffer [buff_index++] = source[(*index)++];
-                format = 0;
-                continue;
-            } else if (source[*index] == '\n'){
-                line_number++;
-            } else if (source[*index] == '%'){
-                buffer[buff_index++] = source[(*index)++];
-                format++;
-                continue;
+    while (source[*index] != '\"' && source[*index] != '\0'){
+        if (format != 0){
+            if (strchr("dcfs", source[*index])){
+                format_specifier++;
             }
-            buffer[buff_index++] = source[(*index) ++];
+
+            buffer[buff_index++] = source[(*index)++];
+            format = 0;
+            continue;
+        } else if (source[*index] == '\n'){
+            line++;
+        } else if (source[*index] == '%'){
+            buffer[buff_index++] = source[(*index)++];
+            format++;
+            continue;
+        }
+        buffer[buff_index++] = source[(*index)++];
     }
+
+    if (source[*index] == '\"'){
+        (*index)++;
+    } else {
+        fprintf(stderr, "Error: Unterminated string at line %zu\n", line);
+    }
+
+    return create_token(format_specifier > 0 ? STR_WITH_FORMAT : STR_CONST, buffer, line);
 }
 
-Token *isChar (const char *source, int *index){
-    char ch = source[*index];
+Token *isChar(const char *source, int *index){
     (*index)++;
+    char ch = source[*index];
 
-    //if character is empty
     if (ch == '\0' || ch == '\''){
-        fprintf(stderr, "Error: Invalid or empty character at line %zu\n", line_number);
+        fprintf(stderr, "Error: Invalid or empty character at line %zu\n", line);
         return NULL;
     }
-    (*index)++
+    (*index)++;
 
-    //if more than one character inside apostrophe
-
-    if(source[*index] != '\''){
+    if (source[*index] != '\''){
         char buffer[50];
         int buff_index = 0;
         (*index)--;
 
-        fprintf(stderr, "Error: Too many characters in character constant at line %zu\n", line_number);
+        fprintf(stderr, "Error: Too many characters in character constant at line %zu\n", line);
 
-        while (source[*index] == '\'' && source[*index] != '\0'){
+        while (source[*index] != '\'' && source[*index] != '\0'){
             buffer[buff_index] = source[*index];
             (*index)++;
             buff_index++;
         }
 
-        if(source[*index] == '\'') {
+        if (source[*index] == '\''){
             (*index)++;
         }
-        return create_token(INVALID, buffer, line_number);
+        return create_token(INVALID, buffer, line);
     }
 
     (*index)++;
-
     char buffer[2] = {ch, '\0'};
-    return create_token(CHAR_CONST, buffer, line_number);
+    return create_token(CHAR_CONST, buffer, line);
+}
+
+Token *isComment(const char *source, int *index) {
+    char buffer[256] = {0}; 
+    int buffer_index = 0;
+    size_t start_line = line;  
+
+    if (source[*index] == '<' && source[*index + 1] == '|') {
+        *index += 2;  
+        while (!(source[*index] == ':' && source[*index + 1] == '>') && source[*index] != '\0') {
+            buffer[buffer_index++] = source[(*index)++];
+        }
+
+        if (source[*index] == ':' && source[*index + 1] == '>') {
+            *index += 2;
+        } else {
+            printf("Warning: Unterminated single-line comment at line %zu\n", line);
+        }
+
+        return create_token(TOKEN_COMMENT, buffer, start_line);
+    }
+
+    return NULL;
 }
 
 Token *isKeyReservedWord(const char *lexeme) {
-    int index = 0;
+    // Implement similar to lexer file, ensuring we return proper tokens.
+    // Simplified implementation for illustration:
+    if (strcmp(lexeme, "begin") == 0) return create_token(BEEGIN, lexeme, line);
+    // Add similar checks for other keywords...
 
-     switch (lexeme[index]) {
-          case 'b':
-               if (lexeme[index + 1] == 'e' && 
-                    lexeme[index + 2] == 'e') {
-                    if (lexeme[index + 3] == 'g') {
-                         if (lexeme[index + 4] == 'i' &&
-                              lexeme[index + 5] == 'n' && 
-                              lexeme[index + 6] == '\0') {
-                              *type = BEEGIN_TOKEN;
-                              
-                         }
-                         else if (lexeme[index + 4] == 'o' &&
-                              lexeme[index + 5] == 'n' &&
-                              lexeme[index + 6] == 'e' &&
-                              lexeme[index + 7] == '\0') {
-                         *type = BEEGONE_TOKEN;
-                         
-                         }
-                    }
-               }
-               else if (lexeme[index + 1] == 'u' &&
-                         lexeme[index + 2] == 'z' &&
-                         lexeme[index + 3] == 'z') {
-                    if (lexeme[index + 4] == '\0') {
-                         *type = BUZZ_TOKEN;
-                         
-                    }
-                    else if (lexeme[index + 4] == 'o' &&
-                              lexeme[index + 5] == 'u' &&
-                              lexeme[index + 6] == 't' &&
-                              lexeme[index + 7] == '\0') {
-                         *type = BUZZOUT_TOKEN;
-                         
-                    }
-               }
-               else if (lexeme[index + 1] == 'o' && 
-                         lexeme[index + 2] == 'o' && 
-                         lexeme[index + 3] == 'l' && 
-                         lexeme[index + 4] == '\0') {
-                    *type = BOOL_TOKEN;
-                    
-               }
-               break;
-
-          case 'c':
-               if (lexeme[index + 1] == 'a' &&
-                    lexeme[index + 2] == 's' &&
-                    lexeme[index + 3] == 'e' &&
-                    lexeme[index + 4] == '\0') {
-                    *type = CASE_TOKEN;
-            
-               }
-               else if (lexeme[index + 1] == 'h' && 
-                         lexeme[index + 2] == 'a') {
-                    if (lexeme[index + 3] == 'i' && 
-                         lexeme[index + 4] == 'n' && 
-                         lexeme[index + 5] == '\0') {
-                         *type = CHAIN_TOKEN;
-                    }
-                    else if (lexeme[index + 3] == 'r' && 
-                              lexeme[index + 4] == '\0') {
-                         *type = CHAR_TOKEN;
-                    }
-               }
-               break;
-
-          case 'd':
-               if (lexeme[index + 1] == 'e' &&
-                    lexeme[index + 2] == 'f' &&
-                    lexeme[index + 3] == 'a' &&
-                    lexeme[index + 4] == 'u' &&
-                    lexeme[index + 5] == 'l' &&
-                    lexeme[index + 6] == 't' &&
-                    lexeme[index + 7] == '\0') {
-                    *type = DEFAULT_TOKEN;
-                    ;
-               }
-               else if (lexeme[index + 1] == 'o' &&
-                         lexeme[index + 2] == '\0') {
-                    *type = DO_TOKEN;
-                    ;
-               }
-               break;
-
-          case 'e':
-               if (lexeme[index + 1] == 'l' &&
-                    lexeme[index + 2] == 's' &&
-                    lexeme[index + 3] == 'e') {
-                    if (lexeme[index + 4] == '\0') {
-                         *type = ELSE_TOKEN;
-                         ;
-                    }
-                    else if (lexeme[index + 4] == 'i' &&
-                            lexeme[index + 5] == 'f' &&
-                            lexeme[index + 6] == '\0') {
-                         *type = ELSEIF_TOKEN;
-                         ;
-                    }
-               }
-               break;
-
-          case 'f':
-               if (lexeme[index + 1] == 'a' && 
-                    lexeme[index + 2] == 'l' && 
-                    lexeme[index + 3] == 's' && 
-                    lexeme[index + 4] == 'e' && 
-                    lexeme[index + 5] == '\0') {
-                    *type = FALSE_TOKEN;
-                    ;
-               }
-               else if (lexeme[index + 1] == 'l' && 
-                         lexeme[index + 2] == 'o' && 
-                         lexeme[index + 3] == 'a' && 
-                         lexeme[index + 4] == 't' && 
-                         lexeme[index + 5] == '\0') {
-                    *type = FLOAT_TOKEN;
-                    ;
-               }
-               break;
-
-          case'g':
-               if (lexeme [index + 1] == 'a' &&
-                    lexeme [index + 2] == 't' &&
-                    lexeme [index + 3] == 'h' &&
-                    lexeme [index + 4] == 'e' &&
-                    lexeme [index + 5] == 'r' &&
-                    lexeme [index + 6] == '\0') {
-                         *type = GATHER_TOKEN;
-                }
-                break;
-
-        case 'h':
-            if(lexeme[index + 1] == 'i' &&
-                lexeme[index + 2] == 'v' &&
-                lexeme [index + 3] == 'e' &&
-                lexeme [index + 4] == '\0'){
-                    *type = HIVE_TOKEN;
-                }
-                else if (lexeme[index + 1] == 'o' &&
-                         lexeme[index + 2] == 'v' &&
-                         lexeme[index + 3] == 'e' &
-                         lexeme[index + 4] == 'r' &&
-                         lexeme[index + 5] == '\0'){
-                            *type = HOVER_TOKEN;
-                }
-                break;
-        
-        case 'i':
-               if (lexeme[index + 1] == 'n' && 
-                    lexeme[index + 2] == 't' && 
-                    lexeme[index + 3] == '\0') {
-                    *type = INT;
-                } else if (lexeme [index + 1] == 'f' &&
-                         lexeme[index + 2] == '\0'){
-                            *type = IF_TOKEN;
-                        } 
-            break;
-
-        case 'q':
-            if (lexeme[index + 1] == 'u' &&
-                lexeme[index + 2] == 'e' &&
-                lexeme[index + 3] == 'e' &
-                lexeme[index + 4] == 'n' &&
-                lexeme[index + 5] == 'b' &&
-                lexeme[index + 6] == 'e' &&
-                lexeme[index + 7] == 'e' &&
-                lexeme[index + 8] == '\0'){
-                    *type = QUEENBEE_TOKEN;
-                }
-            break;
-
-        case 'r':
-            if (lexeme[index + 1] == 'e' &&
-                lexeme[index + 2] == 't' &&
-                lexeme[index + 3] == 'u' &&
-                lexeme[index + 4] == 'r' &&
-                lexeme[index + 5] == 'n' &&
-                lexeme[index + 6] == '\0'){
-                    *type = RETURN_TOKEN;
-                }
-
-        case 's':
-            if(lexeme [index + 1] == 't' &&
-               lexeme [index + 2] == 'i' &&
-               lexeme [index + 3] == 'n' &&
-               lexeme [index + 4] == 'g' &&
-               lexeme [index + 5] == '\0'){
-                *type = STING;
-            } else if (lexeme [index + 1] == 'w' &&
-                       lexeme [index + 2] == 'i' &&
-                       lexeme [index + 3] == 't' &&
-                       lexeme [index + 4] == 'c' &&
-                       lexeme [index + 5] == 'h' &&
-                       lexeme[index + 6] == '\0'){
-                        *type = SWITCH_TOKEN;
-            }
-            break;
-
-        case 't':
-               if (lexeme[index + 1] == 'r' && 
-                    lexeme[index + 2] == 'u' && 
-                    lexeme[index + 3] == 'e' && 
-                    lexeme[index + 4] == '\0') {
-                    *type = TRUE_TOKEN;
-                    ;
-               }
-               break;
-
-        case 'w':
-            if (lexeme[index + 1] == 'h' &&
-                lexeme[index + 2] == 'i' &&
-                lexeme[index + 3] == 'l' &&
-                lexeme[index + 4] == 'e' &&
-                lexeme[index + 5] == '\0'){
-                    *type = WHILE;
-                }
-     }
-     return 0; // Not a keyword or reserved word
+    return create_token(VAR_IDENT, lexeme, line); // Return VAR_IDENT if not a keyword
 }
-
 
 Token *isOperator(FILE *file, int *line_number) {
     char current = fgetc(file);
     char next = fgetc(file);
 
     switch (current) {
-        // Relational Operators
         case '<':
             if (next == '=') {
-                return create_token("LESS_EQUAL", "<=", *line_number);
+                return create_token(LESS_EQUAL, "<=", *line_number);
             }
             ungetc(next, file);
-            return create_token("LESS_THAN", "<", *line_number);
+            return create_token(LESS_THAN, "<", *line_number);
 
         case '>':
             if (next == '=') {
-                return create_token("GREATER_EQUAL", ">=", *line_number);
+                return create_token(GREATER_EQUAL, ">=", *line_number);
             }
             ungetc(next, file);
-            return create_token("GREATER_THAN", ">", *line_number);
+            return create_token(GREATER_THAN, ">", *line_number);
 
         case '=':
             if (next == '=') {
-                return create_token("IS_EQUAL_TO", "==", *line_number);
+                return create_token(IS_EQUAL_TO, "==", *line_number);
             }
             ungetc(next, file);
-            return create_token("ASSIGNMENT_OP", "=", *line_number);
+            return create_token(ASSIGNMENT_OP, "=", *line_number);
 
         case '!':
             if (next == '=') {
-                return create_token("NOT_EQUAL", "!=", *line_number);
+                return create_token(NOT_EQUAL, "!=", *line_number);
             }
             ungetc(next, file);
-            return create_token("LOG_NOT", "!", *line_number);
+            return create_token(LOG_NOT, "!", *line_number);
 
-        // Logical Operators
         case '&':
             if (next == '&') {
-                return create_token("LOG_AND", "&&", *line_number);
+                return create_token(LOG_AND, "&&", *line_number);
             }
             ungetc(next, file);
-            return create_token("TOKEN_UNKNOWN", "&", *line_number);
+            return create_token(TOKEN_UNKNOWN, "&", *line_number);
 
         case '|':
             if (next == '|') {
-                return create_token("LOG_OR", "||", *line_number);
+                return create_token(LOG_OR, "||", *line_number);
             }
             ungetc(next, file);
-            return create_token("TOKEN_UNKNOWN", "|", *line_number);
+            return create_token(TOKEN_UNKNOWN, "|", *line_number);
 
-        // Arithmetic Operators and Unary Operators
         case '+':
             if (next == '+') {
-                return create_token("INCREMENT", "++", *line_number);
+                return create_token(INCRE, "++", *line_number);
             }
             ungetc(next, file);
-            return create_token("ADDITION", "+", *line_number);
+            return create_token(ADDITION, "+", *line_number);
 
         case '-':
             if (next == '-') {
-                return create_token("DECREMENT", "--", *line_number);
+                return create_token(DECRE, "--", *line_number);
             }
             ungetc(next, file);
-            return create_token("SUBTRACTION", "-", *line_number);
+            return create_token(SUBTRACTION, "-", *line_number);
 
         case '*':
             ungetc(next, file);
-            return create_token("MULTIPLICATION", "*", *line_number);
+            return create_token(MULTIPLICATION, "*", *line_number);
 
         case '/':
             if (next == '/') {
-                return create_token("INT_DIVISION", "//", *line_number);
+                return create_token(INT_DIVISION, "//", *line_number);
             }
             ungetc(next, file);
-            return create_token("DIVISION", "/", *line_number);
+            return create_token(DIVISION, "/", *line_number);
 
         case '%':
             ungetc(next, file);
-            return create_token("MODULO", "%", *line_number);
+            return create_token(MOD_ASSIGN, "%", *line_number);
 
         case '^':
             ungetc(next, file);
-            return create_token("EXPONENT", "^", *line_number);
+            return create_token(EXPO_OP, "^", *line_number);
 
-        // Default case for unknown operators
         default: {
             char unknown[2] = {current, '\0'};
             ungetc(next, file);
-            return create_token("TOKEN_UNKNOWN", unknown, *line_number);
+            return create_token(TOKEN_UNKNOWN, unknown, *line_number);
         }
     }
 }
 
-Token *isDelimeter(char ch, int line_number) {
+Token *isDelimiter(char ch, int line_number) {
     switch (ch) {
         case ';':
-            return create_token("SEMICOLON", ";", line_number);
-
+            return create_token(SEMICOLON, ";", line_number);
         case ',':
-            return create_token("COMMA", ",", line_number);
-
+            return create_token(COMMA, ",", line_number);
         case '(':
-            return create_token("LEFT_PAREN", "(", line_number);
-
+            return create_token(LEFT_PAREN, "(", line_number);
         case ')':
-            return create_token("RIGHT_PAREN", ")", line_number);
-
+            return create_token(RIGHT_PAREN, ")", line_number);
         case '[':
-            return create_token("LEFT_BRACKET", "[", line_number);
-
+            return create_token(LEFT_BRACKET, "[", line_number);
         case ']':
-            return create_token("RIGHT_BRACKET", "]", line_number);
-
+            return create_token(RIGHT_BRACKET, "]", line_number);
         case '{':
-            return create_token("LEFT_BRACE", "{", line_number);
-
+            return create_token(LEFT_BRACE, "{", line_number);
         case '}':
-            return create_token("RIGHT_BRACE", "}", line_number);
-
-        case '"':
-            return create_token("DBL_QUOTE", "\"", line_number);
-
+            return create_token(RIGHT_BRACE, "}", line_number);
+        case '\"':
+            return create_token(DBL_QUOTE, "\"", line_number);
         case '\'':
-            return create_token("SNGL_QUOTE", "'", line_number);
-
+            return create_token(SNGL_QUOTE, "'", line_number);
         case ':':
-            return create_token("COLON", ":", line_number);
-
+            return create_token(COLON, ":", line_number);
         default: {
             char unknown[2] = {ch, '\0'};
-            return create_token("TOKEN_UNKNOWN", unknown, line_number); // Unknown delimiter
+            return create_token(TOKEN_UNKNOWN, unknown, line_number); 
         }
     }
-}
-
-
-Token *classify_operator(char current, char next, int *index, int line_number) {
-    (*index)++;
-
-    switch (current) {
-        // Arithmetic Operators
-        case '+':
-            if (next == '+') {
-                (*index)++;
-                return create_token("INCREMENT", "++", line_number);
-            }
-            return create_token("ADDITION", "+", line_number);
-
-        case '-':
-            if (next == '-') {
-                (*index)++;
-                return create_token("DECREMENT", "--", line_number);
-            }
-            return create_token("SUBTRACTION", "-", line_number);
-
-        case '*':
-            return create_token("MULTIPLICATION", "*", line_number);
-
-        case '/':
-            if(next == '/'){
-              (*index++);
-              return create_token("INT_DIVISION","//", line_number);
-            }
-            return create_token("DIVISION", "/", line_number);
-
-        case '=':
-            if (next == '=') {
-                (*index)++;
-                return create_token("IS_EQUAL_TO", "==", line_number);
-            }
-            return create_token("ASSIGNMENT_OP", "=", line_number);
-
-        // Relational Operators
-        case '>':
-            if (next == '=') {
-                (*index)++;
-                return create_token("GREATER_EQUAL", ">=", line_number);
-            }
-            return create_token("GREATER_THAN", ">", line_number);
-
-        case '<':
-            if (next == '=') {
-                (*index)++;
-                return create_token("LESS_EQUAL", "<=", line_number);
-            }
-            return create_token("LESS_THAN", "<", line_number);
-
-        case '!':
-            if (next == '=') {
-                (*index)++;
-                return create_token("NOT_EQUAL", "!=", line_number);
-            }
-            return create_token("NOT", "!", line_number);
-
-        // Logical Operators
-        case '&':
-            if (next == '&') {
-                (*index)++;
-                return create_token("AND", "&&", line_number);
-            } return create_token("INVALID", "&", line_number);
-            
-        break;
-
-        case '|':
-            if (next == '|') {
-                (*index)++;
-                return create_token("OR", "||", line_number);
-            }  return create_token("INVALID", "|", line_number);
-            break;
-
-        // Unary Operators
-        case '^':
-            return create_token("EXPONENT", "^", line_number);
-
-        // Default case for unknown operators
-        default: {
-            char unknown[2] = {current, '\0'};
-            return create_token("TOKEN_UNKNOWN", unknown, line_number);
-        }
-    }
-
-    return NULL;
-}
-
-Token *isComment(const char *source, int *index) {
-    char buffer[256] = {0}; 
-    int buffer_index = 0;
-    size_t start_line = line_number;  
-
-    // Single-line comment: starts with `<|` and ends with `:>`
-    if (source[*index] == '<' && source[*index + 1] == '|') {
-        *index += 2;  // Skip the `<|`
-        while (!(source[*index] == ':' && source[*index + 1] == '>') && source[*index] != '\0') {
-            buffer[buffer_index++] = source[(*index)++];
-        }
-
-        // Ensure we skip the closing `:>` if found
-        if (source[*index] == ':' && source[*index + 1] == '>') {
-            *index += 2;
-        } else {
-            printf("Warning: Unterminated single-line comment at line %zu\n", line_number);
-        }
-
-        return create_token(TOKEN_COMMENT, buffer, start_line);
-    }
-
-    return NULL;  // Not a comment
 }
 
 Token **tokenize(const char *source, size_t *token_count) {
@@ -685,25 +368,19 @@ Token **tokenize(const char *source, size_t *token_count) {
     while (index < length) {
         char c = source[index];
 
-        // Skip white spaces and track line numbers
         if (isspace(c)) {
-            if (c == '\n') line_number++;
+            if (c == '\n') line++;
             index++;
             continue;
         }
 
         Token *token = NULL;
 
-        // Comments
-        if (source[index] == '~') {
+        if (source[index] == '<') {
             token = isComment(source, &index);
-        }
-        // Numbers
-        else if (isdigit(c)) {
+        } else if (isdigit(c)) {
             token = isIntFloat(source, &index);
-        }
-        // Keywords or Identifiers
-        else if (isalpha(c) || c == '_') {
+        } else if (isalpha(c) || c == '_') {
             char buffer[64] = {0};
             int buffer_index = 0;
             int is_flagged = 0;
@@ -720,35 +397,25 @@ Token **tokenize(const char *source, size_t *token_count) {
             }
 
             if (is_flagged){
-                fprintf(stderr, "Error: Invalid token '%s' at line %zu\n", buffer, line_number);
-                token = create_token(TOKEN_INVALID, buffer, line_number);
-            
+                fprintf(stderr, "Error: Invalid token '%s' at line %zu\n", buffer, line);
+                token = create_token(INVALID, buffer, line);
             } else {
-                token = isKeyReservedWord(buffer); // Classify if string is keyword, reserved word, or noise word
+                token = isKeyReservedWord(buffer);
             }
-        }
-        // Operators
-        else if (strchr("+-*/=$%^<>!&|", c)) { 
+        } else if (strchr("+-*/=$%^<>!&|", c)) { 
             token = isOperator(source, &index);
-        }
-        // Delimiters
-        else if (strchr(";{},()[]", c)) {
-            token = isDelimiter(c, line_number);
+        } else if (strchr(";{},()[]", c)) {
+            token = isDelimiter(c, line);
             index++; 
-        }
-        else if (c == '"') { // Detect the start of a string
+        } else if (c == '\"') { 
             token = isString(source, &index);
-        }
-        else if (source[index] == '\'') { // Detect the start of a character
+        } else if (source[index] == '\'') { 
             token = isChar(source, &index);
-        }
-        // Handle unrecognized characters
-        else if (ispunct(source[index])) {
+        } else if (ispunct(source[index])) {
             token = isOperator(source, &index);
-            fprintf(stderr, "Error: Unrecognized character '%c' at line %zu\n", c, line_number);
+            fprintf(stderr, "Error: Unrecognized character '%c' at line %zu\n", c, line);
         }
 
-        // Store token
         if (token) {
             if (*token_count == capacity) {
                 capacity *= 2;
@@ -775,5 +442,3 @@ Token **lexer(FILE *file, size_t *token_count) {
 
     return tokens;
 }
-
-
