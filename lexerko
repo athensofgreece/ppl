@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 unsigned int line = 1;
+size_t line_number = 1;
 
 int tokens_index = 0;
 int lexeme_index = 0;
