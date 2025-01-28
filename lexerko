@@ -230,13 +230,228 @@ Token *isComment(const char *source, int *index) {
     return NULL;
 }
 
-Token *isKeyReservedWord(const char *lexeme) {
-    // Implement similar to lexer file, ensuring we return proper tokens.
-    // Simplified implementation for illustration:
-    if (strcmp(lexeme, "begin") == 0) return create_token(BEEGIN, lexeme, line);
-    // Add similar checks for other keywords...
 
-    return create_token(VAR_IDENT, lexeme, line); // Return VAR_IDENT if not a keyword
+Token *isKeyReservedWord(const char *lexeme) {
+    int index = 0;
+
+     switch (lexeme[index]) {
+          case 'b':
+               if (lexeme[index + 1] == 'e' && 
+                    lexeme[index + 2] == 'e') {
+                    if (lexeme[index + 3] == 'g') {
+                         if (lexeme[index + 4] == 'i' &&
+                              lexeme[index + 5] == 'n' && 
+                              lexeme[index + 6] == '\0') {
+                              *type = BEEGIN_TOKEN;
+                              
+                         }
+                         else if (lexeme[index + 4] == 'o' &&
+                              lexeme[index + 5] == 'n' &&
+                              lexeme[index + 6] == 'e' &&
+                              lexeme[index + 7] == '\0') {
+                         *type = BEEGONE_TOKEN;
+                         
+                         }
+                    }
+               }
+               else if (lexeme[index + 1] == 'u' &&
+                         lexeme[index + 2] == 'z' &&
+                         lexeme[index + 3] == 'z') {
+                    if (lexeme[index + 4] == '\0') {
+                         *type = BUZZ_TOKEN;
+                         
+                    }
+                    else if (lexeme[index + 4] == 'o' &&
+                              lexeme[index + 5] == 'u' &&
+                              lexeme[index + 6] == 't' &&
+                              lexeme[index + 7] == '\0') {
+                         *type = BUZZOUT_TOKEN;
+                         
+                    }
+               }
+               else if (lexeme[index + 1] == 'o' && 
+                         lexeme[index + 2] == 'o' && 
+                         lexeme[index + 3] == 'l' && 
+                         lexeme[index + 4] == '\0') {
+                    *type = BOOL_TOKEN;
+                    
+               }
+               break;
+
+          case 'c':
+               if (lexeme[index + 1] == 'a' &&
+                    lexeme[index + 2] == 's' &&
+                    lexeme[index + 3] == 'e' &&
+                    lexeme[index + 4] == '\0') {
+                    *type = CASE_TOKEN;
+            
+               }
+               else if (lexeme[index + 1] == 'h' && 
+                         lexeme[index + 2] == 'a') {
+                    if (lexeme[index + 3] == 'i' && 
+                         lexeme[index + 4] == 'n' && 
+                         lexeme[index + 5] == '\0') {
+                         *type = CHAIN_TOKEN;
+                    }
+                    else if (lexeme[index + 3] == 'r' && 
+                              lexeme[index + 4] == '\0') {
+                         *type = CHAR_TOKEN;
+                    }
+               }
+               break;
+
+          case 'd':
+               if (lexeme[index + 1] == 'e' &&
+                    lexeme[index + 2] == 'f' &&
+                    lexeme[index + 3] == 'a' &&
+                    lexeme[index + 4] == 'u' &&
+                    lexeme[index + 5] == 'l' &&
+                    lexeme[index + 6] == 't' &&
+                    lexeme[index + 7] == '\0') {
+                    *type = DEFAULT_TOKEN;
+                    ;
+               }
+               else if (lexeme[index + 1] == 'o' &&
+                         lexeme[index + 2] == '\0') {
+                    *type = DO_TOKEN;
+                    ;
+               }
+               break;
+
+          case 'e':
+               if (lexeme[index + 1] == 'l' &&
+                    lexeme[index + 2] == 's' &&
+                    lexeme[index + 3] == 'e') {
+                    if (lexeme[index + 4] == '\0') {
+                         *type = ELSE_TOKEN;
+                         ;
+                    }
+                    else if (lexeme[index + 4] == 'i' &&
+                            lexeme[index + 5] == 'f' &&
+                            lexeme[index + 6] == '\0') {
+                         *type = ELSEIF_TOKEN;
+                         ;
+                    }
+               }
+               break;
+
+          case 'f':
+               if (lexeme[index + 1] == 'a' && 
+                    lexeme[index + 2] == 'l' && 
+                    lexeme[index + 3] == 's' && 
+                    lexeme[index + 4] == 'e' && 
+                    lexeme[index + 5] == '\0') {
+                    *type = FALSE_TOKEN;
+                    ;
+               }
+               else if (lexeme[index + 1] == 'l' && 
+                         lexeme[index + 2] == 'o' && 
+                         lexeme[index + 3] == 'a' && 
+                         lexeme[index + 4] == 't' && 
+                         lexeme[index + 5] == '\0') {
+                    *type = FLOAT_TOKEN;
+                    ;
+               }
+               break;
+
+          case'g':
+               if (lexeme [index + 1] == 'a' &&
+                    lexeme [index + 2] == 't' &&
+                    lexeme [index + 3] == 'h' &&
+                    lexeme [index + 4] == 'e' &&
+                    lexeme [index + 5] == 'r' &&
+                    lexeme [index + 6] == '\0') {
+                         *type = GATHER_TOKEN;
+                }
+                break;
+
+        case 'h':
+            if(lexeme[index + 1] == 'i' &&
+                lexeme[index + 2] == 'v' &&
+                lexeme [index + 3] == 'e' &&
+                lexeme [index + 4] == '\0'){
+                    *type = HIVE_TOKEN;
+                }
+                else if (lexeme[index + 1] == 'o' &&
+                         lexeme[index + 2] == 'v' &&
+                         lexeme[index + 3] == 'e' &
+                         lexeme[index + 4] == 'r' &&
+                         lexeme[index + 5] == '\0'){
+                            *type = HOVER_TOKEN;
+                }
+                break;
+        
+        case 'i':
+               if (lexeme[index + 1] == 'n' && 
+                    lexeme[index + 2] == 't' && 
+                    lexeme[index + 3] == '\0') {
+                    *type = INT;
+                } else if (lexeme [index + 1] == 'f' &&
+                         lexeme[index + 2] == '\0'){
+                            *type = IF_TOKEN;
+                        } 
+            break;
+
+        case 'q':
+            if (lexeme[index + 1] == 'u' &&
+                lexeme[index + 2] == 'e' &&
+                lexeme[index + 3] == 'e' &
+                lexeme[index + 4] == 'n' &&
+                lexeme[index + 5] == 'b' &&
+                lexeme[index + 6] == 'e' &&
+                lexeme[index + 7] == 'e' &&
+                lexeme[index + 8] == '\0'){
+                    *type = QUEENBEE_TOKEN;
+                }
+            break;
+
+        case 'r':
+            if (lexeme[index + 1] == 'e' &&
+                lexeme[index + 2] == 't' &&
+                lexeme[index + 3] == 'u' &&
+                lexeme[index + 4] == 'r' &&
+                lexeme[index + 5] == 'n' &&
+                lexeme[index + 6] == '\0'){
+                    *type = RETURN_TOKEN;
+                }
+
+        case 's':
+            if(lexeme [index + 1] == 't' &&
+               lexeme [index + 2] == 'i' &&
+               lexeme [index + 3] == 'n' &&
+               lexeme [index + 4] == 'g' &&
+               lexeme [index + 5] == '\0'){
+                *type = STING;
+            } else if (lexeme [index + 1] == 'w' &&
+                       lexeme [index + 2] == 'i' &&
+                       lexeme [index + 3] == 't' &&
+                       lexeme [index + 4] == 'c' &&
+                       lexeme [index + 5] == 'h' &&
+                       lexeme[index + 6] == '\0'){
+                        *type = SWITCH_TOKEN;
+            }
+            break;
+
+        case 't':
+               if (lexeme[index + 1] == 'r' && 
+                    lexeme[index + 2] == 'u' && 
+                    lexeme[index + 3] == 'e' && 
+                    lexeme[index + 4] == '\0') {
+                    *type = TRUE_TOKEN;
+                    ;
+               }
+               break;
+
+        case 'w':
+            if (lexeme[index + 1] == 'h' &&
+                lexeme[index + 2] == 'i' &&
+                lexeme[index + 3] == 'l' &&
+                lexeme[index + 4] == 'e' &&
+                lexeme[index + 5] == '\0'){
+                    *type = WHILE;
+                }
+     }
+     return 0; // Not a keyword or reserved word
 }
 
 Token *isOperator(FILE *file, int *line_number) {
