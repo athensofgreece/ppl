@@ -69,6 +69,7 @@ const char* token_type(TokenType type){
         case INT: return "INT_TOKEN";
         case QUEENBEE: return "QUEENBEE_TOKEN";
         case RETURN: return "RETURN_TOKEN";
+        case RETURN_VALUE: return "NOISEWORD";
         case STING: return "STING_TOKEN";
         case SWITCH: return "SWITCH_TOKEN";
         case TRUE: return "TRUE_TOKEN";
@@ -324,13 +325,13 @@ Token *isKeyReservedWord(const char *lexeme) {
                     lexeme[index + 3] == 'e') {
                     if (lexeme[index + 4] == '\0') {
                          *type = ELSE_TOKEN;
-                         ;
+                         
                     }
                     else if (lexeme[index + 4] == 'i' &&
                             lexeme[index + 5] == 'f' &&
                             lexeme[index + 6] == '\0') {
                          *type = ELSEIF_TOKEN;
-                         ;
+                         
                     }
                }
                break;
@@ -413,7 +414,14 @@ Token *isKeyReservedWord(const char *lexeme) {
                 lexeme[index + 5] == 'n' &&
                 lexeme[index + 6] == '\0'){
                     *type = RETURN_TOKEN;
-                }
+                } else if (lexeme[index + 6] == 'v' &&
+                           lexeme[index + 7] == 'a' &&
+                           lexeme[index + 8] == 'l' &&
+                           lexeme[index + 9] == 'u' &&
+                           lexeme [index + 10] == 'e' &&
+                           lexeme[index + 11] == '\0') {
+                                *type = NOISE_WORD;
+                            }
 
         case 's':
             if(lexeme [index + 1] == 't' &&
@@ -453,6 +461,8 @@ Token *isKeyReservedWord(const char *lexeme) {
      }
      return 0; // Not a keyword or reserved word
 }
+
+
 
 Token *isOperator(FILE *file, int *line_number) {
     char current = fgetc(file);
