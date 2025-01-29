@@ -1,0 +1,91 @@
+buzz
+beegin
+    <| Declare :>
+    int #i = 0;
+    int #num;
+    #x = 10;
+    #x = #y;
+    #x = #y + 5;
+    int #a, #b, #c;
+    hive float #x[3];
+
+    float #sum = 0.0;
+    int age[10];
+    int #myNumbers[] = {25, 50, 75, 100};
+
+    queenbee {
+       <| FOR LOOP :>
+        for (#i = 0; #i < 5; #i++) {
+            int #j = 0;
+          
+            for (#j = 0; #j < 5; #j++) {
+                buzzout("%d", #i); 
+                buzzout("%d", #j); 
+            }
+        }
+
+       <| IF STMT :>
+        if (#x < 10) { 
+            buzzout("x is less than 10"); 
+        }
+
+        if (#y == 0) { 
+            buzzout("y is zero");
+        } else { 
+            buzzout("y is non-zero"); 
+        }
+
+        if (#z > 10) { 
+            buzzout("z is greater than 10"); 
+        } else if (#z == 10) { 
+            buzzout("z equals 10"); 
+        } else { 
+            buzzout("z is less than 10"); 
+        }
+
+     
+        for (#i = 0; #i < 10; #i++) {
+            buzzout("Value of i: %d", #i);
+        }
+
+      
+        for (#i = 0; #i < 5; #i++) {
+            for (#j = 0; #j < 3; #j++) {
+                buzzout("i: %d, j: %d", #i, #j);
+            }
+        
+        while (#x < 5) {
+            buzzout("Current value: %d", #x);
+            #x = #x + 1;
+        }
+
+        while (#x < 10) { 
+            while (#y < 10) { 
+                buzzout("%d ", #y); 
+                #y++; 
+            }
+            #x++;
+        }
+
+       
+        do { 
+            buzzout("%d", #x); 
+            #x++;
+        } while (#x < 10);
+
+    
+        do {
+            int #x = 20;
+            int #y = 10;
+            do {
+                buzzout("%d", #y);
+                #y++;
+            } while (#y < 11);
+            buzzout("\n");
+            #x++;
+        } while (#x <= 20);
+
+    }
+}
+    
+beegone
